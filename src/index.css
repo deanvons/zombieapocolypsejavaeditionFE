@@ -4,8 +4,15 @@
 
 
 @theme {
-  --color-bg: #09100E;
-   --color-text: #c8d8d0;
+  --color-bg: #121317;
+  --color-text: #C8D8D0;
+  --color-red: #A5272F;
+  --color-blue: #19538A;
+  --color-green: #688D6B;
+  --color-light-brown: #8E8467;
+  --color-light-yellow: #EDE397;
+  --color-light-grey: #F3F6F6;
+
 
   --font-display: 'Russo One', sans-serif;
   --font-body: 'Source Sans 3', sans-serif;
