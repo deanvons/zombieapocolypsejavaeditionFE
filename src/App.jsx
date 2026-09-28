@@ -1,11 +1,12 @@
 import HomePage from './pages/HomePage'
+import SelectPage from './pages/SelectPage'
 
 function App() {
 
 
   return (
     <>
-    <HomePage />
+    <SelectPage />
     </>
     
   )
