@@ -1,0 +1,8 @@
+{
+  "realm": "Zombie Apocalypse",
+  "auth-server-url": "https://keycloak-26-2-jrtn.onrender.com",
+  "ssl-required": "external",
+  "resource": "Zombie Apocalypse React FE",
+  "public-client": true,
+  "confidential-port": 0
+}
