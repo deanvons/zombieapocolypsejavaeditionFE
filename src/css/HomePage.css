@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@layer components {
+    .homepage-maincontent {
+        @apply flex-1 flex flex-col items-center justify-center px-8 py-16
+    }
+
+    .homepage-title {
+        @apply font-['Russo_One'] text-6xl md:text-8xl tracking-wider mb-3 leading-none
+    }
+
+
+
+}
