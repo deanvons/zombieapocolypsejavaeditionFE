@@ -1,14 +1,52 @@
+@import "../index.css";
 @import "tailwindcss";
 
 @layer components {
     .homepage-maincontent {
-        @apply flex-1 flex flex-col items-center justify-center px-8 py-16
+        @apply flex-1 flex flex-col items-center justify-center px-8 py-16;
+    }
+
+    .blinking-title {
+        @apply font-mono text-xs tracking-[0.4em] uppercase text-primary mb-6;
     }
 
     .homepage-title {
-        @apply font-['Russo_One'] text-6xl md:text-8xl tracking-wider mb-3 leading-none
+        @apply font-russo text-6xl md:text-8xl tracking-wider mb-3 leading-none;
     }
 
+    .menu-button {
+        @apply relative text-left px-6 py-4 border rounded-sm transition-all duration-150;
+    }
 
+    .menu-button-disabled {
+        @apply border-border text-text-dim opacity-30 cursor-not-allowed;
+    }
 
+    .menu-button-active {
+        @apply border-border hover:border-primary/60 hover:bg-primary/5 cursor-pointer active:scale-[0.99];
+    }
+
+    .button-label {
+        @apply font-russo text-lg tracking-wide transition-colors;
+    }
+
+    .button-label-disabled {
+        @apply text-text-dim;
+    }
+
+    .button-label-active {
+        @apply text-text group-hover:text-primary;
+    }
+
+    .button-subtext {
+        @apply font-mono text-xs text-text-dim mt-0.5;
+    }
+
+    .button-arrow {
+        @apply font-mono text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity;
+    }
+
+    .button-indicator {
+        @apply absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-primary group-hover:h-full transition-all duration-200 rounded-r-full;
+    }
 }

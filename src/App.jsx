@@ -1,14 +1,11 @@
-import HomePage from './pages/HomePage'
-import SelectPage from './pages/SelectPage'
+import { RouterProvider } from 'react-router'
+import router from "./router/"
 
 function App() {
 
 
   return (
-    <>
-    <SelectPage />
-    </>
-    
+    <RouterProvider router={router} />
   )
 }
 export default App
