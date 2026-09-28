@@ -3,7 +3,7 @@
 // expose an object to do keycloak stuff
 import Keycloak from "keycloak-js";
 
-const keycloak = new Keycloak("src/config/keycloak.json");
+const keycloak = new Keycloak("/config/keycloak.json");
 
 export const initialize = () => {
   const config = {
