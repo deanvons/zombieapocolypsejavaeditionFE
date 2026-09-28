@@ -59,7 +59,7 @@ export default function SelectPage() {
                         className="bg-neutral-primary-soft block max-w-sm border border-default p-6 shadow-xs"
                     >
                         <img
-                            className="h-64 w-full rounded-base object-cover"
+                            className="h-64 w-full rounded-base object-contain bg-neutral-primary-soft"
                             src={survivor.image}
                             alt={`${survivor.name.toLowerCase()} survivor`}
                         />
