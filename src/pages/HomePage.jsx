@@ -5,11 +5,23 @@ export default function HomePage() {
     keycloak.login();
   }
 
-    function logout() {
+  function logout() {
     keycloak.logout();
   }
-    function showToken() {
-    console.log(keycloak.tokenParsed)
+  function showToken() {
+    console.log(keycloak.token);
+  }
+
+  function testToken() {
+    fetch("http://localhost:8080/api/checkToken", {
+      method: "GET", // or 'POST', 'PUT', etc.
+      headers: {
+        "Authorization": `Bearer ${keycloak.token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => console.log(response))
+      .catch((response) => console.error(response));
   }
 
   return (
@@ -21,6 +33,7 @@ export default function HomePage() {
       <button onClick={login}>Login</button>
       <button onClick={logout}>Logout</button>
       <button onClick={showToken}>Show Token</button>
+      <button onClick={testToken}>Test Token</button>
     </div>
   );
 }
