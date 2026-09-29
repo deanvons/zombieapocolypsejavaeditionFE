@@ -11,7 +11,7 @@ const difficulties = [
 
 //will need to add defaultsettings object for this (now its not possible to change) and fetch savedGame
 
-export default function SettingsPage({settings = {difficulty: 'normal'}, savedGame, onChange, onDeleteSave, onNavigate}){
+export default function SettingsPage({settings = {difficulty: 'normal'}, savedGame, onChange, onDeleteSave}){
 const [confirmDelete, setConfirmDelete] = useState(false)
 
 const handleDelete = () => {
