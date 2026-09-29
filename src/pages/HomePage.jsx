@@ -6,6 +6,7 @@ import "../css/HomePage.css";
 
 
 
+
 const menu_items = [
     {id: 'new', label: 'New Game', sub: 'Choose your survivor and begin', always: true },
     {id: 'continue', label: 'Continue Game', sub: 'Continue where you left off', always: false },
@@ -30,7 +31,7 @@ export default function HomePage({savedGame, onNavigate, onClick}) {
     if(itemId === 'continue') navigate('/camp');
     if(itemId === 'settings') navigate('/settings');
   }
-  
+
   /*
   function showToken() {
     console.log(keycloak.token);
