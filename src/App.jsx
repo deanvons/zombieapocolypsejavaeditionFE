@@ -1,11 +1,14 @@
-import { RouterProvider } from 'react-router'
-import router from "./router/"
+import { Provider } from 'react-redux';
+import AuthStack from './router/authStack';
+import { store } from './redux/store/store.js';
 
 function App() {
 
-
   return (
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <AuthStack />
+    </Provider>
+    
   )
 }
 export default App

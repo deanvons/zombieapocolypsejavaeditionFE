@@ -2,14 +2,23 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import { initialize } from "../keycloak.js";
+import keycloak, { initialize } from "../keycloak.js";
 import { Provider } from "react-redux";
 import { store } from "./redux/store/store.js";
+import { setUser } from "./redux/slices/user/userSlice.js";
 
 const root = createRoot(document.getElementById("root"));
 
 initialize()
-    .then(() => {
+    .then((authenticated) => {
+        if (authenticated) {
+            store.dispatch(
+                setUser({
+                    username: keycloak.tokenParsed?.preffered_username ?? null,
+                }),
+            );
+        }
+
         root.render(
             <StrictMode>
                 <Provider store={store}>
@@ -28,4 +37,3 @@ initialize()
             </div>,
         );
     });
-
