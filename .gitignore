@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Keep DBeaver downloads and workspace files out of this project
+*[dD][bB][eE][aA][vV][eE][rR]*
