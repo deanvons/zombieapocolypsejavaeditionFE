@@ -7,8 +7,8 @@ import "../css/HomePage.css";
 
 const menu_items = [
     {id: 'new', label: 'New Game', sub: 'Choose your survivor and begin', always: true },
-    {id: 'continue', label: 'Continue Game', sub: null, always: false },
-    {id: 'settings', label: 'Settings', sub: 'Difficulty, display, audio', always: true}
+    {id: 'continue', label: 'Continue Game', sub: 'Continue where you left off', always: false },
+    {id: 'settings', label: 'Settings', sub: 'Manage your survivor game', always: true}
   ]
 
 
@@ -58,7 +58,7 @@ export default function HomePage({savedGame, onNavigate, onClick}) {
         <nav className="flex flex-col gap-1 w-full max-w-xs">
             {isLoggedIn? (<>{menu_items.map(item => {
             const isDisabled = !item.always && !savedGame
-            const subText = item.id === 'continue' && savedGame ? `${savedGame.classIcon}` : item.sub
+            const subText = item.id === 'continue' && savedGame ? `${savedGame.survivorName}` : item.sub //also need to add savedgame object so that you can continue from previous save, now this does nothing
         
             return(
                 <button
