@@ -8,9 +8,10 @@ const difficulties = [
     {value: 'hard', label: 'Hard', desc: 'Harder to find resources. Relentless zombies.'}
 ]
 
+
 //will need to add defaultsettings object for this and fetch savedGame
 
-export default function SettingsPage({settings, savedGame, onChange, onDeleteSave, onNavigate}){
+export default function SettingsPage({settings = {difficulty: 'normal'}, savedGame, onChange, onDeleteSave, onNavigate}){
 const [confirmDelete, setConfirmDelete] = useState(false)
 
 const handleDelete = () => {
@@ -41,7 +42,7 @@ return(
                                         </p>
                                         <p className="font-mono text-xs text-text-dim mt-0.5">{d.desc}</p>
                                     </div>
-                                    {settings.difficulty === d-value && (
+                                    {settings.difficulty === d.value && (
                                         <div className="w-2 h-2 rounded-full bg-primary animate-pulse-red shrink-0 ml-4" />
                                     )}
                                 </div>
