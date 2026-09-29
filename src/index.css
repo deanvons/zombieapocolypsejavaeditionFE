@@ -1,12 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 
 @theme {
   --color-bg: #121317;
   --color-text: #C8D8D0;
   --color-text-dim: #7A8B82; 
-  --color-border: #2A2E35;   
+  --color-border: #2A2E35;
+  --color-border-bright: #2A4038; 
+  --color-panel: #131F1C;  
   --color-primary: #A5272F;  
   
   --color-red: #A5272F;
