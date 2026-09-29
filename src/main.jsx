@@ -11,12 +11,13 @@ const root = createRoot(document.getElementById("root"));
 
 initialize()
     .then((authenticated) => {
-        store.dispatch(
-            setUser({
-                username: keycloak.tokenParsed?.preffered_username ?? null,
-                authenticated,
-            }),
-        );
+        if (authenticated) {
+            store.dispatch(
+                setUser({
+                    username: keycloak.tokenParsed?.preffered_username ?? null,
+                }),
+            );
+        }
 
         root.render(
             <StrictMode>
