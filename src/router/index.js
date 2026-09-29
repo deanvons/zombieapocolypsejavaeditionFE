@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 
 import HomePage from "../pages/HomePage.jsx";
 import SelectPage from "../pages/SelectPage.jsx";
+import SettingsPage from "../pages/SettingsPage.jsx";
 
 
 const router = createBrowserRouter([
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     path: "/selectpage",
     Component: SelectPage,
   },
+  {
+    path: "/settings",
+    Component: SettingsPage
+  }
 
   /*Note: To add more pages, add import and an entry to the array: 
   {
