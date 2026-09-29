@@ -13,7 +13,7 @@ const menu_items = [
   ]
 
 
-export default function HomePage({savedGame}) {
+export default function HomePage({savedGame, onNavigate, onClick}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const navigate = useNavigate();
 
@@ -23,12 +23,6 @@ export default function HomePage({savedGame}) {
 
   function logout() {
     keycloak.logout();
-  }
-
-  const handleMenuClick = (itemId) => {
-    if(itemId === 'new') navigate('/create-survivor');
-    if(itemId === 'continue') navigate('/camp');
-    if(itemId === 'settings') navigate('/settings');
   }
   /*
   function showToken() {
@@ -98,9 +92,9 @@ export default function HomePage({savedGame}) {
         
         })}
         
-        <button className="mt-20 group menu-button menu-button-active w-full" onClick={logout}>Logout</button>
+        <button className="mt-20 group menu-button menu-button-active w-full font-russo" onClick={logout}>Logout</button>
         </>):(
-        <button className="group menu-button menu-button-active w-full" onClick={login}>Login</button>
+        <button className="group menu-button menu-button-active w-full font-russo" onClick={login}>Login</button>
         )}
         
         </nav>
