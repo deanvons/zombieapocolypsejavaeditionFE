@@ -24,6 +24,13 @@ export default function HomePage({savedGame, onNavigate, onClick}) {
   function logout() {
     keycloak.logout();
   }
+
+  const handleMenuClick = (itemId) => {
+    if(itemId === 'new') navigate('/create-survivor');
+    if(itemId === 'continue') navigate('/camp');
+    if(itemId === 'settings') navigate('/settings');
+  }
+  
   /*
   function showToken() {
     console.log(keycloak.token);
