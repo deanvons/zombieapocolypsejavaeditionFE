@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage.jsx";
 
 import SettingsPage from "../pages/SettingsPage.jsx";
 import CreateSurvivorPage from "../pages/CreateSurvivorPage.jsx";
+import CampPage from "../pages/CampPage.jsx";
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     Component: SettingsPage
+  },
+  {
+    path: "/camp",
+    Component: CampPage
   }
 
   /*Note: To add more pages, add import and an entry to the array:
