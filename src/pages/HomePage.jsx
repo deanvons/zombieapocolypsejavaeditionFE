@@ -13,7 +13,7 @@ const menu_items = [
   ]
 
 
-export default function HomePage({savedGame, onNavigate, onClick}) {
+export default function HomePage({savedGame=null, onNavigate = () => {}, onClick = () => {}}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const navigate = useNavigate();
 
