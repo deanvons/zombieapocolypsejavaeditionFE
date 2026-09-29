@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import keycloak from "../../keycloak";
 import "../css/HomePage.css";
 
@@ -14,13 +15,11 @@ const menu_items = [
 
 export default function HomePage({savedGame, onNavigate, onClick}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    //const handleClick()
-
+    const navigate = useNavigate();
 
     function login() {
-    keycloak.login();
-   
-  }
+      keycloak.login();
+    }
 
   function logout() {
     keycloak.logout();
@@ -64,7 +63,7 @@ export default function HomePage({savedGame, onNavigate, onClick}) {
                 <button
                 key={item.id}
                 disabled={isDisabled}
-                /*onClick kommer her*/
+                onClick={() => handleMenuClick(item.id)}
                 className={`group menu-button
                     ${isDisabled
                       ? 'menu-button-disabled'
