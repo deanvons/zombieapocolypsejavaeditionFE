@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux';
-import AuthStack from './router/authStack'
+import AuthStack from './router/authStack';
+import { store } from './redux/store/store.js';
 
 function App() {
 
