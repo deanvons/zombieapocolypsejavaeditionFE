@@ -52,7 +52,9 @@ const survivorTypes = [
 
 export default function CreateSurvivorPage() {
   return (
+    
     <div className="selectpage-maincontent">
+    
       <header>
         <h2 className="homepage-title animate-flicker">
           WHO DO YOU WANT TO BE?
