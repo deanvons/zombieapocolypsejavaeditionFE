@@ -1,0 +1,708 @@
+/*
+ * Zombie Apocalypse Keycloak login theme
+ *
+ * Plain-CSS equivalent of the Tailwind styles in src/index.css and
+ * src/css/HomePage.css. It targets Keycloak's current (keycloak.v2) markup
+ * and its legacy PatternFly login markup where the selectors differ.
+ *
+ * The Google Fonts import is optional. For a strict Content Security Policy,
+ * replace it with locally hosted @font-face declarations under resources/.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+    --kc-bg: #121317;
+    --kc-text: #c8d8d0;
+    --kc-text-dim: #7a8b82;
+    --kc-border: #2a2e35;
+    --kc-primary: #a5272f;
+    --kc-primary-hover: #c5353f;
+    --kc-primary-muted: rgb(165 39 47 / 5%);
+    --kc-primary-border: rgb(165 39 47 / 60%);
+    --kc-danger: #a5272f;
+    --kc-blue: #19538a;
+    --kc-green: #688d6b;
+    --kc-light-brown: #8e8467;
+    --kc-light-yellow: #ede397;
+    --kc-light-grey: #f3f6f6;
+    --kc-font-display: "Russo One", Impact, sans-serif;
+    --kc-font-body: "Source Sans 3", Arial, sans-serif;
+    --kc-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+body.login-pf,
+body.pf-v5-c-login {
+    min-height: 100%;
+}
+
+body,
+body.login-pf,
+body.pf-v5-c-login {
+    margin: 0;
+    background: var(--kc-bg);
+    color: var(--kc-text);
+    font-family: var(--kc-font-body);
+}
+
+/*
+ * Keycloak v2 normally uses a two-column PatternFly layout. Replace it with
+ * the same centered, single-column flow as the app's landing page.
+ */
+.login-pf-page {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+}
+
+.pf-v5-c-login {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+}
+
+.pf-v5-c-login__container {
+    display: flex !important;
+    flex: 0 1 42rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: min(100% - 2rem, 42rem) !important;
+    min-height: 100vh !important;
+    padding: 2.5rem 1rem !important;
+}
+
+.pf-v5-c-login__main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    align-self: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* This is the gray PatternFly form panel shown by Keycloak v2 by default. */
+.pf-v5-c-login__main-body {
+    width: min(100%, 20rem) !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Header: matches the app's blinking-title and homepage-title treatments. */
+#kc-header {
+    width: min(100% - 2rem, 42rem);
+    margin: 0 auto 6rem;
+    text-align: center;
+}
+
+#kc-header::before {
+    display: block;
+    margin-bottom: 1.5rem;
+    color: var(--kc-primary);
+    content: "ZOMBIE APOCALYPSE INCOMING";
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    line-height: 1rem;
+    text-transform: uppercase;
+    animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+/* The realm name is intentionally replaced with the app's landing-page title. */
+#kc-header-wrapper {
+    margin: 0;
+    font-size: 0;
+    line-height: 0;
+}
+
+#kc-header-wrapper::after {
+    display: block;
+    color: var(--kc-text);
+    content: "SURVIVOR";
+    font-family: var(--kc-font-display);
+    font-size: 3.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    animation: flicker 8s infinite;
+}
+
+/* Keycloak's default "Sign in to …" heading is redundant below the hero. */
+#kc-page-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Flat form layout: the app shows controls directly on the page, not in a card. */
+.card-pf,
+#kc-content {
+    width: min(100% - 2rem, 20rem);
+    margin-inline: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#kc-content-wrapper,
+#kc-form,
+#kc-form-wrapper {
+    width: 100%;
+}
+
+/* Remove any remaining v2 card decoration around the login controls. */
+.pf-v5-c-login__main-body .pf-v5-c-card,
+.pf-v5-c-login__main-body .card-pf {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#kc-content-wrapper > * + *,
+#kc-form-wrapper > * + * {
+    margin-top: 1rem;
+}
+
+/* Form labels, fields, and validation messages. */
+.form-group,
+.pf-v5-c-form__group,
+#kc-form-login > div {
+    margin-bottom: 1rem;
+}
+
+.control-label,
+.pf-v5-c-form__label-text,
+#kc-form label,
+#kc-register-form label,
+#kc-passwd-update-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--kc-text);
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1rem;
+    text-transform: uppercase;
+}
+
+.form-control,
+#kc-form-login input[type="text"],
+#kc-form-login input[type="password"],
+#kc-form-login input[type="email"],
+#kc-register-form input,
+#kc-passwd-update-form input,
+#kc-reset-password-form input {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--kc-border);
+    border-radius: 0.125rem;
+    outline: 0;
+    background: var(--kc-bg);
+    color: var(--kc-text);
+    font: inherit;
+    line-height: 1.5;
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease,
+        background-color 150ms ease;
+}
+
+.form-control::placeholder,
+#kc-form input::placeholder {
+    color: var(--kc-text-dim);
+    opacity: 1;
+}
+
+.form-control:hover,
+#kc-form input:hover {
+    border-color: var(--kc-primary-border);
+}
+
+.form-control:focus,
+#kc-form input:focus {
+    border-color: var(--kc-primary);
+    box-shadow: 0 0 0 0.2rem rgb(165 39 47 / 20%);
+}
+
+/*
+ * Keycloak v2 wraps each field in span.pf-v5-c-form-control. Style only the
+ * real input so the wrapper does not create a second, nested input border.
+ */
+span.pf-v5-c-form-control,
+.pf-v5-c-input-group {
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+span.pf-v5-c-form-control {
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Remove PatternFly's inactive underline from the field and password-group wrappers. */
+#kc-form .pf-v5-c-form-control::before,
+#kc-form .pf-v5-c-form-control::after,
+#kc-form .pf-v5-c-input-group::before,
+#kc-form .pf-v5-c-input-group::after {
+    border-color: transparent !important;
+    border-bottom-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Replace PatternFly's default blue focus underline with a red full-control outline. */
+#kc-form .pf-v5-c-form-control:hover,
+#kc-form .pf-v5-c-form-control:focus-within,
+#kc-form .pf-v5-c-input-group:hover,
+#kc-form .pf-v5-c-input-group:focus-within {
+    --pf-v5-c-form-control--hover--BorderBottomColor: var(--kc-primary);
+    --pf-v5-c-form-control--focus--BorderBottomColor: var(--kc-primary);
+    --pf-v5-c-form-control--after--BorderBottomColor: var(--kc-primary);
+    outline: 1px solid var(--kc-primary) !important;
+    outline-offset: 0;
+    box-shadow: none !important;
+}
+
+#kc-form .pf-v5-c-form-control:hover::before,
+#kc-form .pf-v5-c-form-control:hover::after,
+#kc-form .pf-v5-c-form-control:focus-within::before,
+#kc-form .pf-v5-c-form-control:focus-within::after,
+#kc-form .pf-v5-c-input-group:hover::before,
+#kc-form .pf-v5-c-input-group:hover::after,
+#kc-form .pf-v5-c-input-group:focus-within::before,
+#kc-form .pf-v5-c-input-group:focus-within::after {
+    border-color: var(--kc-primary) !important;
+    box-shadow: none !important;
+}
+
+#kc-form input:hover,
+#kc-form input:focus {
+    box-shadow: none;
+}
+
+/* Password visibility button: remove PatternFly's white/blue underline decoration. */
+#kc-form .pf-v5-c-input-group .pf-v5-c-button,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:hover,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:focus {
+    border-bottom-color: var(--kc-border) !important;
+    box-shadow: none !important;
+}
+
+#kc-form .pf-v5-c-input-group .pf-v5-c-button::before,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button::after,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:hover::before,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:hover::after,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:focus::before,
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:focus::after {
+    border-color: transparent !important;
+    border-bottom-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#kc-form .pf-v5-c-input-group .pf-v5-c-button:focus-visible {
+    outline: 1px solid var(--kc-primary) !important;
+    outline-offset: -1px;
+}
+
+#kc-form input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    accent-color: var(--kc-primary);
+}
+
+#kc-form-options,
+.login-pf-settings,
+.pf-v5-c-login__main-footer-band {
+    color: var(--kc-text-dim);
+    font-size: 0.875rem;
+}
+
+#kc-form-options label {
+    display: inline;
+    margin-left: 0.5rem;
+    color: var(--kc-text-dim);
+    font-family: var(--kc-font-body);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.25;
+    text-transform: none;
+}
+
+/* Primary submit button: replaces menu-button menu-button-active and button-label. */
+#kc-login,
+.btn.btn-primary,
+.pf-v5-c-button.pf-m-primary {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 3.625rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--kc-border);
+    border-radius: 0.125rem;
+    outline: 0;
+    background: transparent;
+    color: var(--kc-text);
+    cursor: pointer;
+    font-family: var(--kc-font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: 1.25;
+    text-align: left;
+    text-transform: none;
+    transition:
+        transform 150ms ease,
+        border-color 150ms ease,
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+#kc-login:hover,
+.btn.btn-primary:hover,
+.pf-v5-c-button.pf-m-primary:hover {
+    border-color: var(--kc-primary-border);
+    background: var(--kc-primary-muted);
+    color: var(--kc-primary);
+}
+
+#kc-login:active,
+.btn.btn-primary:active,
+.pf-v5-c-button.pf-m-primary:active {
+    transform: scale(0.99);
+}
+
+#kc-login:focus-visible,
+.btn.btn-primary:focus-visible,
+.pf-v5-c-button.pf-m-primary:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--kc-primary);
+    outline-offset: 3px;
+}
+
+#kc-login::before,
+.btn.btn-primary::before,
+.pf-v5-c-button.pf-m-primary::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0.125rem;
+    height: 0;
+    border-radius: 0 9999px 9999px 0;
+    background: var(--kc-primary);
+    content: "";
+    transform: translateY(-50%);
+    transition: height 200ms ease;
+}
+
+#kc-login:hover::before,
+.btn.btn-primary:hover::before,
+.pf-v5-c-button.pf-m-primary:hover::before {
+    height: 100%;
+}
+
+button:disabled,
+.btn:disabled,
+.pf-v5-c-button:disabled,
+input[type="submit"]:disabled {
+    border-color: var(--kc-border);
+    background: transparent;
+    color: var(--kc-text-dim);
+    cursor: not-allowed;
+    opacity: 0.3;
+    transform: none;
+}
+
+/* Links, alerts, and alternate/social sign-in options. */
+a,
+#kc-registration a,
+#kc-info a {
+    color: var(--kc-primary);
+    text-decoration: none;
+    transition: color 150ms ease;
+}
+
+a:hover,
+#kc-registration a:hover,
+#kc-info a:hover {
+    color: var(--kc-primary-hover);
+    text-decoration: underline;
+}
+
+.alert,
+.pf-v5-c-alert,
+#kc-content .alert {
+    margin: 0 0 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--kc-primary-border);
+    border-radius: 0.125rem;
+    background: var(--kc-primary-muted);
+    color: var(--kc-text);
+    font-size: 0.875rem;
+}
+
+.kc-feedback-text,
+.pf-v5-c-helper-text__item-text,
+.pf-v5-c-form__helper-text {
+    margin-top: 0.375rem;
+    color: var(--kc-primary);
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+}
+
+#kc-social-providers,
+#kc-social-providers ul,
+#kc-social-providers ul li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#kc-social-providers li + li {
+    margin-top: 0.5rem;
+}
+
+#kc-social-providers a,
+#kc-social-providers .zocial {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--kc-border);
+    border-radius: 0.125rem;
+    background: transparent;
+    color: var(--kc-text);
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-align: left;
+    text-transform: uppercase;
+    transition:
+        border-color 150ms ease,
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+#kc-social-providers a:hover,
+#kc-social-providers .zocial:hover {
+    border-color: var(--kc-primary-border);
+    background: var(--kc-primary-muted);
+    color: var(--kc-primary);
+    text-decoration: none;
+}
+
+/* Tailwind utility conversions retained for custom Keycloak templates. */
+.homepage-maincontent {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+}
+
+.blinking-title {
+    margin-bottom: 1.5rem;
+    color: var(--kc-primary);
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    line-height: 1rem;
+    text-transform: uppercase;
+}
+
+.homepage-title {
+    margin-bottom: 0.75rem;
+    font-family: var(--kc-font-display);
+    font-size: 3.75rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.menu-button {
+    position: relative;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--kc-border);
+    border-radius: 0.125rem;
+    text-align: left;
+    transition: all 150ms ease;
+}
+
+.menu-button-disabled {
+    border-color: var(--kc-border);
+    color: var(--kc-text-dim);
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.menu-button-active {
+    cursor: pointer;
+}
+
+.menu-button-active:hover {
+    border-color: var(--kc-primary-border);
+    background: var(--kc-primary-muted);
+}
+
+.menu-button-active:active {
+    transform: scale(0.99);
+}
+
+.button-label {
+    font-family: var(--kc-font-display);
+    font-size: 1.125rem;
+    letter-spacing: 0.05em;
+    transition: color 150ms ease;
+}
+
+.button-label-disabled {
+    color: var(--kc-text-dim);
+}
+
+.button-label-active {
+    color: var(--kc-text);
+}
+
+.group:hover .button-label-active {
+    color: var(--kc-primary);
+}
+
+.button-subtext {
+    margin-top: 0.125rem;
+    color: var(--kc-text-dim);
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+.button-arrow {
+    color: var(--kc-primary);
+    font-family: var(--kc-font-mono);
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 150ms ease;
+}
+
+.group:hover .button-arrow {
+    opacity: 1;
+}
+
+.button-indicator {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0.125rem;
+    height: 0;
+    border-radius: 0 9999px 9999px 0;
+    background: var(--kc-primary);
+    transform: translateY(-50%);
+    transition: all 200ms ease;
+}
+
+.group:hover .button-indicator {
+    height: 100%;
+}
+
+.animate-flicker {
+    animation: flicker 8s infinite;
+}
+
+.animate-pulse-red {
+    color: var(--kc-primary);
+    animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0%,
+    95%,
+    100% {
+        opacity: 1;
+    }
+
+    96% {
+        opacity: 0.6;
+    }
+
+    97% {
+        opacity: 1;
+    }
+
+    98% {
+        opacity: 0.4;
+    }
+}
+
+@keyframes pulse-red {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+@media (min-width: 48rem) {
+    #kc-header-wrapper::after,
+    .homepage-title {
+        font-size: 6rem;
+    }
+}
+
+@media (max-width: 30rem) {
+    .login-pf-page {
+        padding: 2.5rem 1rem;
+    }
+
+    .card-pf,
+    #kc-content {
+        padding: 1.5rem;
+    }
+
+    #kc-header::before {
+        letter-spacing: 0.24em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
