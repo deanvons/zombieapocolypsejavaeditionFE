@@ -1,11 +1,24 @@
+import { useNavigate } from "react-router";
+import "../css/Navbar.css";
+
 export default function NavBar(){
+    const navigate = useNavigate()
+     
     return (
-    <nav>
-    <button className="text-white">Home</button>
-    <button>My profile</button>
-    <button>Camp</button>
-    <button>Actions</button>
-    <button>Log out</button>
+    <nav className="navbar">
+    <button 
+    onClick={() => navigate("/")}
+          className="navbar-button">Home</button>
+    <button
+    onClick={() => navigate("/settings")} //temporary navigation
+          className="navbar-button">My profile</button>
+    <button
+    onClick={() => navigate("/camp")}
+          className="navbar-button">Camp</button>
+    <button
+    onClick={() => navigate("/actions")}
+          className="navbar-button">Actions</button>
+   
     </nav>
     )
 }
