@@ -4,13 +4,15 @@ import "../css/SettingsPage.css";
 import { useEffect } from "react";
 
 export default function AdminPage(){
+
+    const API_URL = import.meta.env.VITE_API_URL
     // Hiding the navbar link isn't enough on its own - block direct visits to /admin too
     if (!keycloak.hasRealmRole("ADMIN")) {
         return <Navigate to="/" replace />
     }
 
     useEffect(   
-      ()=>fetch(`${VITE_API_URL}/api/profiles/all`, {
+      ()=>fetch(`${API_URL}/api/profiles/all`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${keycloak.token}`,
