@@ -19,7 +19,7 @@
     }
 
     .navbar-text{
-        @apply font-mono text-text-dim
+        @apply font-mono text-text-dim mr-5
     }
 
 }
