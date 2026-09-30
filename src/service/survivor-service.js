@@ -29,6 +29,25 @@ export async function getAllSurvivors() {
   return await response.json();
 }
 
+//GET/api/survivors/me
+export async function getMySurvivor() {
+  const jwt = await getToken();
+  const response = await fetch(`${API_URL}/api/survivors/me`, {
+    method: "GET",
+    headers: getBearerHeader(jwt),
+  });
+ 
+  if (response.status === 404) {
+    return null;
+  }
+ 
+  if (!response.ok) {
+    throw new Error(`getMySurvivor failed: ${response.status}`);
+  }
+ 
+  return await response.json();
+}
+
 // POST /api/survivors 
 export async function createSurvivor(name, type) {
   const jwt = await getToken();
@@ -47,4 +66,20 @@ export async function createSurvivor(name, type) {
   }
 
   return await response.json();
+}
+
+export async function deleteMySurvivor() {
+  const jwt = await getToken();
+  const response = await fetch(`${API_URL}/api/survivors/me`, {
+    method: "DELETE",
+    headers: getBearerHeader(jwt),
+  });
+ 
+  if (response.status === 404) {
+    throw new Error("You don't have a survivor to delete.");
+  }
+ 
+  if (!response.ok) {
+    throw new Error(`deleteMySurvivor failed: ${response.status}`);
+  }
 }
