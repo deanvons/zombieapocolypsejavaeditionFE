@@ -4,6 +4,7 @@ import CreateSurvivorPage from "../pages/CreateSurvivorPage.jsx";
 import SettingsPage from "../pages/SettingsPage.jsx";
 import CampPage from "../pages/CampPage.jsx"
 import AdminPage from "../pages/AdminPage.jsx";
+import SurvivorPage from "../pages/SurvivorPage.jsx";
 import AppLayout from "../layouts/AppLayout.jsx";
 
 const authenticatedRoutes = [
@@ -21,6 +22,10 @@ const authenticatedRoutes = [
         {
         path: "/settings",
         Component: SettingsPage,
+        },
+        {
+        path: "/profile",
+        Component: SurvivorPage,
         },
         {
         path: "/camp",
