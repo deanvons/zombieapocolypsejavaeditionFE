@@ -26,3 +26,7 @@ dist-ssr
 
 # Keep DBeaver downloads and workspace files out of this project
 *[dD][bB][eE][aA][vV][eE][rR]*
+
+# Personal editor formatting config
+.prettierrc
+.prettierignore
