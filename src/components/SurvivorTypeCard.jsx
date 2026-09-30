@@ -1,10 +1,6 @@
 import "../css/HomePage.css";
 
-
 export default function SurvivorTypeCard({ survivor }) {
-
-  
-
   return (
     <article className="bg-neutral-primary-soft flex w-full flex-col border border-default p-4 shadow-xs">
       <img
