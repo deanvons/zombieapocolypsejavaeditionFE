@@ -14,7 +14,7 @@ const navigate = useNavigate()
       <header>
         <button
             onClick={() => navigate('/')}
-            className="navbar-button m-10"
+            className="navbar-button"
           >
             ← Back
           </button>
