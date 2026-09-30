@@ -1,0 +1,25 @@
+@import "../index.css";
+@import "tailwindcss";
+
+
+
+@layer components {
+    .navbar-header{
+        @apply w-full border-b border-border shadow-lg shadow-primary/30 mb-15
+    }
+    .navbar{
+        @apply flex m-10 items-center gap-5 p-4 
+    }
+      .navbar-button{
+        @apply font-mono text-sm px-4 py-2 rounded-sm border border-border text-text-dim hover:border-border-bright hover:text-text transition-colors
+    }
+
+    .alert-box{
+        @apply absolute right-0 mt-2 w-64 bg-bg border border-border p-4 rounded-md shadow-xl z-50
+    }
+
+    .navbar-text{
+        @apply font-mono text-text-dim
+    }
+
+}
