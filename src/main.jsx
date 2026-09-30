@@ -14,7 +14,7 @@ initialize()
         if (authenticated) {
             store.dispatch(
                 setUser({
-                    username: keycloak.tokenParsed?.preffered_username ?? null,
+                    username: keycloak.tokenParsed?.preferred_username ?? null,
                 }),
             );
         }
