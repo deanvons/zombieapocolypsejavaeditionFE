@@ -19,14 +19,7 @@ initialize()
             );
         }
 
-      //http://localhost:8080/api/profiles/all
-      fetch(`http://localhost:8080/api/profiles/all`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${keycloak.token}`,
-          "Content-Type": "application/json",
-        },
-      }).then(response => console.log(response));
+ 
     
 
     root.render(
