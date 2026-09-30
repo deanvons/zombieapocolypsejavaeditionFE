@@ -1,4 +1,4 @@
-import NavBar from "../components/NavBar";
+
 import "../css/CampPage.css";
 
 
