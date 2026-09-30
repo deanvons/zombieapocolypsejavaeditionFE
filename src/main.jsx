@@ -10,13 +10,14 @@ import { setUser } from "./redux/slices/user/userSlice.js";
 const root = createRoot(document.getElementById("root"));
 
 initialize()
-  .then((authenticated) => {
-    if (authenticated) {
-      store.dispatch(
-        setUser({
-          username: keycloak.tokenParsed?.preffered_username ?? null,
-        }),
-      );
+    .then((authenticated) => {
+        if (authenticated) {
+            store.dispatch(
+                setUser({
+                    username: keycloak.tokenParsed?.preferred_username ?? null,
+                }),
+            );
+        }
 
       //http://localhost:8080/api/profiles/all
       fetch(`http://localhost:8080/api/profiles/all`, {
@@ -26,7 +27,7 @@ initialize()
           "Content-Type": "application/json",
         },
       }).then(response => console.log(response));
-    }
+    
 
     root.render(
       <StrictMode>
