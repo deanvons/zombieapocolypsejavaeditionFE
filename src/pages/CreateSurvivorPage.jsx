@@ -1,6 +1,7 @@
 import SurvivorTypeCard from "../components/SurvivorTypeCard";
 import { survivorTypes } from "../components/SurvivorType.js";
 import "../css/CreateSurvivorPage.css";
+import { useNavigate } from "react-router";
 
 
 
