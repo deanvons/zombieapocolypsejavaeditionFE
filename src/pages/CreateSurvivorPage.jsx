@@ -1,4 +1,6 @@
 import "../css/CreateSurvivorPage.css";
+import { useNavigate } from "react-router";
+import "../css/Navbar.css";
 
 const survivorTypes = [
   {
@@ -51,9 +53,18 @@ const survivorTypes = [
 ];
 
 export default function CreateSurvivorPage() {
+  
+const navigate = useNavigate()
+
   return (
     <div className="selectpage-maincontent">
       <header>
+        <button
+            onClick={() => navigate('/')}
+            className="navbar-button m-10"
+          >
+            ← Back
+          </button>
         <h2 className="homepage-title animate-flicker">
           WHO DO YOU WANT TO BE?
         </h2>

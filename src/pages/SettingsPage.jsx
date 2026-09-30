@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "../css/SettingsPage.css";
+import { useNavigate } from "react-router";
 
 
 const difficulties = [
@@ -11,7 +12,12 @@ const difficulties = [
 
 //will need to add defaultsettings object for this (now its not possible to change) and fetch savedGame
 
-export default function SettingsPage({settings = {difficulty: 'normal'}, savedGame, onChange, onDeleteSave}){
+export default function SettingsPage({
+    settings = {difficulty: 'normal'}, 
+    savedGame, 
+    onChange = () => {}, 
+    onDeleteSave = () => {}
+}){
 const [confirmDelete, setConfirmDelete] = useState(false)
 
 const handleDelete = () => {
@@ -19,8 +25,18 @@ const handleDelete = () => {
     setConfirmDelete(false)
 }
 
+const navigate = useNavigate()
+
 return(
+    <div>
+    <button
+            onClick={() => navigate('/')}
+            className="navbar-button m-10"
+          >
+            ← Back
+          </button>
     <div className="settings-maincontent">
+        
         <h1 className="settings-title">Settings</h1>
 
         <section className="mb-10">
@@ -29,7 +45,7 @@ return(
                 {difficulties.map(d => (
                     <button
                     key={d.value}
-                    onClick={() => onChange({...settings, difficulty: d.value})}
+                    //onClick={() => onChange({...settings, difficulty: d.value})} no function yet
                     className={`difficulty-card
                         ${settings.difficulty === d.value
                             ? 'difficulty-card-active'
@@ -58,9 +74,9 @@ return(
                     <>
                     <div className="save-card-header">
                         <div>
-                        <p className="save-card-name">{savedGame.survivorName}</p>
+                        <p className="save-card-name">Example survivorname{/*savedGame.survivorName*/}</p>
                         <p className="save-card-title">
-                            {savedGame.survivorTitle}
+                            Example survivortitle{/*savedGame.survivorTitle*/}
                         </p>
                         </div>
                     </div>
@@ -95,6 +111,7 @@ return(
             </div>
         </section>
     </div>
+</div>
 
 )
 
