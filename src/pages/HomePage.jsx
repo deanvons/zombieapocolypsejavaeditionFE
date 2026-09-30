@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import keycloak from "../../keycloak";
 import "../css/HomePage.css";
+import NavBar from "../components/NavBar";
 
 
 

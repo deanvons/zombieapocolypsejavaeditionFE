@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import "../css/Navbar.css";
+import "../css/NavBar.css";
 import "../css/SettingsPage.css";
 import keycloak from "../../keycloak";
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 export default function NavBar({onLogout = () => {}, savedGame}){
     const navigate = useNavigate()
+    const isAdmin = keycloak.hasRealmRole("ADMIN")
     const [confirmLogout, setConfirmLogout] = useState(false)
   
     const handleLogout = () => {
@@ -35,6 +36,11 @@ export default function NavBar({onLogout = () => {}, savedGame}){
     <button
     onClick={() => navigate("/actions")}
           className="navbar-button">Actions</button>
+    {isAdmin && (
+    <button
+    onClick={() => navigate("/admin")}
+          className="navbar-button">Admin</button>
+    )}
 
 
     <div className="relative ml-auto">
