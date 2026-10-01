@@ -9,21 +9,21 @@ const navigate = useNavigate()
 
   return (
     
-    <div className="selectpage-maincontent mx-auto w-full max-w-6xl px-4 py-4">
+    <div className="create-survivor-maincontent">
       <header>
         <button
             onClick={() => navigate('/')}
-            className="navbar-button m-10"
+            className="navbar-button create-survivor-back-button"
           >
             ← Back
           </button>
 
-        <h2 className="mb-3 text-center font-russo text-3xl leading-tight tracking-wider md:text-4xl animate-flicker">
+        <h2 className="create-survivor-title animate-flicker">
           WHO DO YOU WANT TO BE?
         </h2>
       </header>
 
-      <div className="survivortype-components mt-3 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="create-survivor-type-grid">
         {survivorTypes.map((survivor) => (
           <SurvivorTypeCard key={survivor.name} survivor={survivor} />
         ))}

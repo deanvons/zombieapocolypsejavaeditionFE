@@ -1,13 +1,19 @@
 @reference "../index.css";
 
 @layer components {
-    .homepage-maincontent {
-        @apply flex-1 flex flex-col items-center justify-center px-8 py-16;
+    .create-survivor-maincontent {
+        @apply mx-auto w-full max-w-6xl px-4 py-4;
     }
 
-    .homepage-title {
-        @apply font-['Russo_One'] text-6xl md:text-8xl tracking-wider mb-3 leading-none;
+    .create-survivor-back-button {
+        @apply m-10;
     }
 
+    .create-survivor-title {
+        @apply mb-3 text-center font-russo text-3xl leading-tight tracking-wider md:text-4xl;
+    }
+
+    .create-survivor-type-grid {
+        @apply mt-3 grid grid-cols-1 gap-4 md:grid-cols-3;
+    }
 }
-
