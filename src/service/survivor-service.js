@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export async function getAllSurvivors() {
   const response = await fetch(`${API_URL}/api/survivors`, {
     method: "GET",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (!response.ok) {
@@ -20,7 +20,7 @@ export async function getAllSurvivors() {
 export async function getMySurvivor() {
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "GET",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (response.status === 404) {
@@ -38,7 +38,7 @@ export async function getMySurvivor() {
 export async function createSurvivor(name, type) {
   const response = await fetch(`${API_URL}/api/survivors`, {
     method: "POST",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
     body: JSON.stringify({ name, type }),
   });
 
@@ -56,7 +56,7 @@ export async function createSurvivor(name, type) {
 export async function deleteMySurvivor() {
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "DELETE",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (response.status === 404) {
