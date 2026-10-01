@@ -1,27 +1,24 @@
 import '../css/CampPage.css'
-import { getAllSurvivors, getMySurvivor } from '../service/survivor-service'
+import { getAllSurvivors } from '../service/survivor-service'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import ShowAllSurvivors from '../components/ShowAllSurvivors'
 
 
 export default function CampPage() {
-    const [ mySurvivor, setMySurvivor ] = useState(null);
-    const [ otherSurvivors, setOtherSurvivors ] = useState([]);
+    const mySurvivor = useSelector((state) => state.survivor.survivor);
+    const [ allSurvivors, setAllSurvivors ] = useState([]);
 
     useEffect(() => {
         async function loadSurvivors() {
-            const [allSurvivors, mySurvivor] = await Promise.all([
-                getAllSurvivors(),
-                getMySurvivor(),
-            ])
-            setMySurvivor(mySurvivor);
-            const otherSurvivors = mySurvivor
-                ? allSurvivors.filter((survivor) => survivor.id !== mySurvivor.id)
-                : allSurvivors
-            setOtherSurvivors(otherSurvivors);
+            setAllSurvivors(await getAllSurvivors());
         }
         loadSurvivors();
     }, [])
+
+    const otherSurvivors = mySurvivor
+        ? allSurvivors.filter((survivor) => survivor.id !== mySurvivor.id)
+        : allSurvivors
 
     return (
         <>
