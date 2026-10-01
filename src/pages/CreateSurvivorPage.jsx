@@ -29,11 +29,10 @@ export default function CreateSurvivorPage({onSelect}) {
           >
             ← Back
           </button>
-
-        <h2 className="mb-3 text-center font-russo text-3xl leading-tight tracking-wider md:text-4xl animate-flicker">
+      </header>
+       <h2 className="mb-3 text-center font-russo text-3xl leading-tight tracking-wider md:text-4xl animate-flicker">
           WHO DO YOU WANT TO BE?
         </h2>
-      </header>
     <div className="flex flex-col items-center px-8 pb-8">
       <div className="w-full max-w-sm">
     <label className="font mono text-xs uppercase tracking-widest text-text-dim block mb-2">Survivor name</label>
