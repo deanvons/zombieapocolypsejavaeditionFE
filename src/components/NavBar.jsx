@@ -4,10 +4,11 @@ import "../css/NavBar.css";
 import "../css/SettingsPage.css";
 import keycloak from "../../keycloak";
 import { useSelector } from "react-redux";
+import { survivorTypes } from "./SurvivorType";
 
     
 
-export default function NavBar({onLogout = () => {}, savedGame}){
+export default function NavBar({onLogout = () => {}}){
     const navigate = useNavigate()
     const isAdmin = keycloak.hasRealmRole("ADMIN")
     const [confirmLogout, setConfirmLogout] = useState(false)
@@ -26,7 +27,7 @@ export default function NavBar({onLogout = () => {}, savedGame}){
     return (
     <header className="navbar-header">
     <nav className="navbar">
-    <span className="navbar-text font-bold">Welcome Survivorname</span> {/*should be {savedGame.survivorName}*/}
+    <span className="navbar-text font-bold">Welcome {survivorTypes.name}</span>
     <button
     onClick={() => navigate("/profile")} //temporary navigation for future implementation
           className="navbar-button">My profile</button>
