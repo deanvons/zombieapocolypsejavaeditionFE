@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "../css/SettingsPage.css";
 import { useNavigate } from "react-router";
+import { deleteMySurvivor, getMySurvivor } from "../service/survivor-service";
 
 
 const difficulties = [
@@ -64,6 +65,23 @@ return(
                                 </div>
                             </button>
                 ))}
+            </div>
+        </section>
+
+        <section className="mb-10">
+            <p className="settings-option-title">DELETE YOUR SURVIVOR</p>
+            <div className="space-y-2">
+                    <button className ="delete-cancel-button" onClick={deleteMySurvivor}>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className={`font-russo text-sm 'text-primary' : 'text-text'}`}>
+                                            Delete survivor {getMySurvivor}
+                                        </p>
+                                        <p className="difficulty-card-description">This wil permanently delete your current survivor, and enable you to create a new one</p>
+                                    </div>
+                                    
+                                </div>
+                    </button>
             </div>
         </section>
 
