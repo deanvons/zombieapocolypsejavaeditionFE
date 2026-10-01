@@ -1,1 +1,52 @@
 @reference "../index.css";
+
+
+.action-card {
+    @apply flex-1 m-15 px-6 py-4 pt-9 border rounded-sm transition-all duration-150;
+}
+
+@layer components {
+    .action-title {
+        @apply font-russo text-3xl text-text tracking-wide mb-2;
+    }
+
+    .action-subtitle {
+        @apply font-mono text-xs uppercase tracking-widest text-text-dim;
+    }
+
+    .action-card-title {
+        @apply font-russo text-lg text-text tracking-wide mb-1;
+    }
+
+    .action-result-score {
+        @apply font-russo text-7xl md:text-9xl text-green tracking-wider leading-none;
+    }
+
+    .action-error {
+        @apply font-mono text-sm text-primary mt-4;
+    }
+
+    .action-card-description {
+        @apply font-sans text-sm text-text-dim mb-4;
+    }
+
+    .action-entry {
+        @apply w-full text-left p-4 mb-2 rounded-sm border transition-all duration-150 cursor-pointer;
+    }
+
+    .action-entry-active {
+        @apply border-primary/60 bg-primary/5;
+    }
+
+    .action-entry-inactive {
+        @apply border-border bg-panel hover:border-border-bright;
+    }
+
+    .action-entry-effect {
+        @apply font-mono text-xs text-text-dim mt-0.5;
+    }
+
+    .action-entry-indicator {
+        @apply w-2 h-2 rounded-full bg-primary shrink-0 ml-4;
+    }
+}

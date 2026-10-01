@@ -67,3 +67,19 @@ export async function deleteMySurvivor() {
     throw new Error(`deleteMySurvivor failed: ${response.status}`);
   }
 }
+
+// POST /api/survivors/{id}/actions/{actionId}
+export async function performAction(survivorId, actionId) {
+  const response = await fetch(`${API_URL}/api/survivors/${survivorId}/actions/${actionId}`, {
+    method: "POST",
+    headers: await getAuthHeaders(),
+  });
+
+  if (!response.ok) {
+    // The backend sends { status, message } on errors; However, the body may be empty (e.g. 401)
+    const errorResponse = await response.json().catch(() => null);
+    throw new Error(errorResponse?.message ?? `performAction failed: ${response.status}`);
+  }
+
+  return await response.json();
+}

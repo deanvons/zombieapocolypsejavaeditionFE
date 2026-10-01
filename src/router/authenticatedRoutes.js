@@ -6,6 +6,7 @@ import CampPage from "../pages/CampPage.jsx"
 import AdminPage from "../pages/AdminPage.jsx";
 import SurvivorPage from "../pages/SurvivorPage.jsx";
 import AppLayout from "../layouts/AppLayout.jsx";
+import ActionPage from "../pages/ActionPage.jsx";
 
 const authenticatedRoutes = [
     {
@@ -35,6 +36,10 @@ const authenticatedRoutes = [
         path: "/admin",
         Component: AdminPage,
         },
+        {
+        path: "/actions",
+        Component: ActionPage,
+        }
       ],
     },
   ];
