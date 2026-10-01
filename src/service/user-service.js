@@ -1,24 +1,11 @@
-import { keycloak } from "../../keycloak";
+import { getAuthHeaders } from "./token-service";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-async function updateAndGetToken() {
-  return await keycloak.updateToken(30);
-}
-
-function getBearerHeader(jwt) {
-  const headers = {
-    Authorization: `Bearer ${jwt}`,
-    "Content-Type": "application/json",
-  };
-
-  return headers;
-}
-
-async function postNewUserProfile(jwt) {
+async function postNewUserProfile() {
   const response = await fetch(`${API_URL}/api/profiles/me`, {
     method: "POST",
-    headers: getBearerHeader(jwt),
+    headers: await getAuthHeaders(),
   });
 
   if (!response.ok) {
@@ -28,10 +15,10 @@ async function postNewUserProfile(jwt) {
   return await response.json();
 }
 
-async function getUserProfileForToken(jwt) {
+async function getUserProfileForToken() {
   const response = await fetch(`${API_URL}/api/profiles/me`, {
     method: "GET",
-    headers: getBearerHeader(jwt),
+    headers: await getAuthHeaders(),
   });
 
   if (response.status === 404) {
@@ -46,10 +33,8 @@ async function getUserProfileForToken(jwt) {
 }
 
 async function createUser() {
-  const jwt = await updateAndGetToken();
-
   try {
-    const user = await postNewUserProfile(jwt);
+    const user = await postNewUserProfile();
     return user;
   } catch (exception) {
     console.error(exception);
@@ -57,10 +42,8 @@ async function createUser() {
 }
 
 async function getUserProfile() {
-  const jwt = await updateAndGetToken();
-
   try {
-    const user = await getUserProfileForToken(jwt);
+    const user = await getUserProfileForToken();
     return user;
   } catch (exception) {
     console.error(exception);

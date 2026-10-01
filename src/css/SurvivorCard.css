@@ -1,0 +1,29 @@
+@import "../index.css";
+@import "tailwindcss";
+
+@layer components {
+    .survivor-card {
+        @apply flex items-start gap-4 rounded-lg border p-4
+    }
+    .survivor-card-you {
+        @apply border-2
+    }
+    .survivor-card-avatar {
+        @apply h-12 w-12 shrink-0 rounded-full bg-neutral-200
+    }
+    .survivor-card-name-row {
+        @apply flex items-center gap-2
+    }
+    .survivor-card-name {
+        @apply text-lg font-semibold
+    }
+    .survivor-card-you-badge {
+        @apply rounded-full bg-black px-2 py-0.5 text-xs font-semibold text-white
+    }
+    .survivor-card-subtitle {
+        @apply text-sm text-neutral-500
+    }
+    .survivor-card-skills {
+        @apply mt-1 text-sm text-neutral-500
+    }
+}

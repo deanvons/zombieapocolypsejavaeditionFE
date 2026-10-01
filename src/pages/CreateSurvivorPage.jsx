@@ -21,6 +21,7 @@ export default function CreateSurvivorPage({onSelect}) {
   }
 
   return (
+    
     <div className="selectpage-maincontent mx-auto w-full max-w-6xl px-4 py-4">
       <header>
         <button
@@ -66,5 +67,6 @@ export default function CreateSurvivorPage({onSelect}) {
         ))}
       </div>
     </div>
+    
   );
 }
