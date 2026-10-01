@@ -1,41 +1,61 @@
 import "../css/HomePage.css";
 
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 import { login, logout } from "../service/token-service";
+import { getMySurvivor } from "../service/survivor-service.js";
+import LoadingSpinner from "../components/LoadingSpinner.jsx";
 
-const menu_items = [
-  {
-    id: "new",
-    label: "New Game",
-    sub: "Choose your survivor and begin",
-    always: true,
-  },
-  {
-    id: "continue",
-    label: "Continue Game",
-    sub: "Continue where you left off",
-    always: false,
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    sub: "Manage your survivor game",
-    always: true,
-  },
-];
-
-export default function HomePage({ savedGame }) {
+export default function HomePage() {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
 
-  const handleMenuClick = (itemId) => {
-    if (itemId === "new") navigate("/create-survivor");
-    if (itemId === "continue") navigate("/camp");
-    if (itemId === "settings") navigate("/settings");
-  };
+  const [survivor, setSurvivor] = useState(null);
+  const [loadingSurvivor, setLoadingSurvivor] = useState(true);
+
+  // TODO: replace with survivor from Redux when the slice is done
+  useEffect(() => {
+    // HomePage is also shown when logged out, and there is no token to fetch with then
+    if (!user.authenticated) return;
+
+    async function loadSurvivor() {
+      try {
+        setSurvivor(await getMySurvivor());
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoadingSurvivor(false);
+      }
+    }
+    loadSurvivor();
+  }, [user.authenticated]);
+
+  const menuItems = [
+    {
+      id: "new",
+      label: "New Game",
+      sub: "Choose your survivor and begin",
+      disabled: false,
+      onClick: () => navigate(survivor ? "/delete-survivor" : "/create-survivor"),
+    },
+    {
+      id: "continue",
+      label: "Continue Game",
+      sub: survivor ? survivor.name : "Continue where you left off",
+      disabled: !survivor,
+      onClick: () => navigate("/camp"),
+    },
+    {
+      id: "settings",
+      label: "Settings",
+      sub: "Manage your survivor game",
+      disabled: false,
+      onClick: () => navigate("/settings"),
+    },
+  ];
 
   return (
     <div className="homepage-maincontent">
@@ -49,39 +69,35 @@ export default function HomePage({ savedGame }) {
       <nav className="flex flex-col gap-1 w-full max-w-xs">
         {user.authenticated ? (
           <>
-            {menu_items.map((item) => {
-              const isDisabled = !item.always && !savedGame;
-              const subText =
-                item.id === "continue" && savedGame
-                  ? `${savedGame.survivorName}`
-                  : item.sub; //also need to add savedgame object so that you can continue from previous save, now this does nothing
-
-              return (
+            {loadingSurvivor ? (
+              <LoadingSpinner />
+            ) : (
+              menuItems.map((item) => (
                 <button
                   key={item.id}
-                  disabled={isDisabled}
-                  onClick={() => handleMenuClick(item.id)}
+                  disabled={item.disabled}
+                  onClick={item.onClick}
                   className={`group menu-button
                     ${
-                      isDisabled ? "menu-button-disabled" : "menu-button-active"
+                      item.disabled ? "menu-button-disabled" : "menu-button-active"
                     }`}
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <p
                         className={`button-label
-                        ${isDisabled ? "button-label-disabled" : "button-label-active"}`}
+                        ${item.disabled ? "button-label-disabled" : "button-label-active"}`}
                       >
                         {item.label}
                       </p>
-                      {subText && <p className="button-subtext">{subText}</p>}
+                      {item.sub && <p className="button-subtext">{item.sub}</p>}
                     </div>
-                    {!isDisabled && <span className="button-arrow">→</span>}
+                    {!item.disabled && <span className="button-arrow">→</span>}
                   </div>
-                  {!isDisabled && <div className="button-indicator" />}
+                  {!item.disabled && <div className="button-indicator" />}
                 </button>
-              );
-            })}
+              ))
+            )}
 
             <button
               className="mt-20 group menu-button menu-button-active w-full font-russo"
