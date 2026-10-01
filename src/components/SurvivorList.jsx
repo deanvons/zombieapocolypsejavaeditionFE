@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import keycloak from "../../keycloak";
 import { survivorTypes } from "./SurvivorType.js";
 import "../css/HomePage.css";
+import { getAllSurvivors } from "../service/survivor-service.js";
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -22,22 +23,11 @@ export default function SurvivorList(){
     useEffect(() =>{
         async function loadSurvivors(){
             try{
-                await keycloak.updateToken(30);
-
-                const response = await fetch(`${API_URL}/api/survivors`, {
-                    method: 'GET',
-                    headers: {'Authorization': `Bearer ${keycloak.token}`}
-            });
-            if(!response.ok){
-                throw new Error(`Getting survivors failed: ${response.status}`);
-            }
-            const data = await response.json();
-            setSurvivors(data);
+                setSurvivors(await getAllSurvivors())
             } catch (e){
-                setError(e.message);
+                console.error(e);
             }
         }
-
         loadSurvivors();
     })
     if (survivors.length === 0) return <p className="text-center text-body">No survivors yet.</p>;
