@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 async function postNewUserProfile() {
   const response = await fetch(`${API_URL}/api/profiles/me`, {
     method: "POST",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (!response.ok) {
@@ -18,7 +18,7 @@ async function postNewUserProfile() {
 async function getUserProfileForToken() {
   const response = await fetch(`${API_URL}/api/profiles/me`, {
     method: "GET",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (response.status === 404) {

@@ -38,7 +38,7 @@ export async function getMySurvivor() {
 export async function createSurvivor(name, type) {
   const response = await fetch(`${API_URL}/api/survivors`, {
     method: "POST",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
     body: JSON.stringify({ name, type }),
   });
 
@@ -56,7 +56,7 @@ export async function createSurvivor(name, type) {
 export async function deleteMySurvivor() {
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "DELETE",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (response.status === 404) {
