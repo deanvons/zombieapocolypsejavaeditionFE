@@ -10,5 +10,9 @@
         @apply font-['Russo_One'] text-6xl md:text-8xl tracking-wider mb-3 leading-none;
     }
 
+    .input-alert-box{
+        @apply absolute w-64 bg-bg border border-border p-3 rounded-md shadow-xl z-50 left-1/2 -translate-x-1/2 text-center
+    }
+
 }
 

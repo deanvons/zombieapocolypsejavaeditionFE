@@ -1,8 +1,23 @@
+import { useNavigate } from "react-router";
 import "../css/HomePage.css";
+import {createSurvivor, getAllSurvivors} from "../service/survivor-service"
+import keycloak from "../../keycloak";
 
 
-export default function SurvivorTypeCard({ survivor }) {
+export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
+ const navigate = useNavigate()
 
+  const handleSelect = async () => {
+    if(onValidate && !onValidate()){
+      return;
+    }
+    try{
+      await createSurvivor(customName, survivor.type)
+      navigate("/camp")
+    }  catch (error){
+      console.error("Could not create survivor: ", error.message)
+    }  
+  }
   
 
   return (
@@ -54,6 +69,7 @@ export default function SurvivorTypeCard({ survivor }) {
       <button
         type="button"
         className="group menu-button menu-button-active mt-auto w-full px-4 py-2"
+        onClick={handleSelect}
       >
         <span className="flex items-center justify-between">
           <span className="button-label button-label-active">Select</span>
