@@ -20,7 +20,7 @@ export async function getAllSurvivors() {
 export async function getMySurvivor() {
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "GET",
-    headers: getAuthHeaders(),
+    headers: await getAuthHeaders(),
   });
 
   if (response.status === 404) {
