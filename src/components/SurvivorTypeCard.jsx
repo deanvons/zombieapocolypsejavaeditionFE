@@ -1,23 +1,48 @@
+import { useNavigate } from "react-router";
 import "../css/HomePage.css";
+import {createSurvivor} from "../service/survivor-service"
+import "../css/SurvivorTypeCard.css"
+import { useState } from "react";
 
 
-export default function SurvivorTypeCard({ survivor }) {
+export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
+ const navigate = useNavigate()
+ const[hovered, setHovered] = useState(false)
 
+  const handleSelect = async () => {
+    if(onValidate && !onValidate()){
+      return;
+    }
+    try{
+      await createSurvivor(customName, survivor.type)
+      navigate("/camp")
+    }  catch (error){
+      console.error("Could not create survivor: ", error.message)
+    }  
+  }
   
 
   return (
-    <article className="bg-neutral-primary-soft flex w-full flex-col border border-default p-4 shadow-xs">
+    <>
+    <button className={
+      `text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full
+      ${hovered ? 'border-border-bright bg-panel-hover -translate-y-0.5' : 'border-border bg-panel'}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={handleSelect}>
+
+    <div className="flex items-center justify-between p-5 border-b border-border">
+      <h3 className="survivor-name">{survivor.name}</h3>
+    </div>
+    <div>
       <img
         className="h-[clamp(15rem,18vh,9rem)] w-full rounded-base object-contain bg-neutral-primary-soft"
         src={survivor.image}
         alt={`${survivor.name.toLowerCase()} survivor`}
       />
-
-      <h3 className="mt-3 mb-2 text-xl font-semibold tracking-tight text-heading">
-        {survivor.name}
-      </h3>
-
-      <h4 className="mb-1 text-sm font-semibold text-heading">Attributes</h4>
+    </div>
+    <div className="space-y-2">
+      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2">Attributes</h4>
       <dl className="mb-3 space-y-1.5 text-xs text-body">
         {Object.entries(survivor.attributes).map(([attribute, value]) => (
           <div className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-2" key={attribute}>
@@ -43,17 +68,20 @@ export default function SurvivorTypeCard({ survivor }) {
           </div>
         ))}
       </dl>
-
-      <h4 className="mb-1 text-sm font-semibold text-heading">Skills</h4>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2">Skills</h4>
       <ul className="mb-3 list-inside list-disc text-xs leading-5 text-body">
         {survivor.skills.map((skill) => (
           <li key={skill}>{skill}</li>
         ))}
       </ul>
+      </div>
 
       <button
         type="button"
         className="group menu-button menu-button-active mt-auto w-full px-4 py-2"
+        onClick={handleSelect}
       >
         <span className="flex items-center justify-between">
           <span className="button-label button-label-active">Select</span>
@@ -61,6 +89,9 @@ export default function SurvivorTypeCard({ survivor }) {
         </span>
         <span className="button-indicator" aria-hidden="true" />
       </button>
-    </article>
+    
+    </button>
+    </>
   );
+  
 }

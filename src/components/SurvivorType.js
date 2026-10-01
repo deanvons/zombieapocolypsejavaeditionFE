@@ -1,6 +1,8 @@
 export const survivorTypes = [
   {
+    id: 0,
     name: "CAREGIVER",
+    type:"Caregiver",
     image: "/hershel1.jpg",
     attributes: {
       Strength: 2,
@@ -14,7 +16,9 @@ export const survivorTypes = [
     skills: ["Field Medicine", "Psychological Support", "Cooking"],
   },
   {
+    id: 1,
     name: "HERO",
+    type: "Hero",
     image: "/rick.jpg",
     attributes: {
       Strength: 9,
@@ -28,7 +32,9 @@ export const survivorTypes = [
     skills: ["Marksman", "Heavy Weapons", "Blunt Weapons"],
   },
   {
+    id: 2,
     name: "OUTLAW",
+    type: "Outlaw",
     image: "/daryl.jpg",
     attributes: {
       Strength: 7,
