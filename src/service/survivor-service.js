@@ -1,25 +1,12 @@
-import keycloak from "../../keycloak";
+import { getAuthHeaders } from "./token-service";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-async function getToken() {
-  await keycloak.updateToken(30);
-  return keycloak.token;
-}
-
-function getBearerHeader(jwt) {
-  return {
-    Authorization: `Bearer ${jwt}`,
-    "Content-Type": "application/json",
-  };
-}
-
 // GET /api/survivors
 export async function getAllSurvivors() {
-  const jwt = await getToken();
   const response = await fetch(`${API_URL}/api/survivors`, {
     method: "GET",
-    headers: getBearerHeader(jwt),
+    headers: getAuthHeaders(),
   });
 
   if (!response.ok) {
@@ -31,26 +18,27 @@ export async function getAllSurvivors() {
 
 //GET/api/survivors/me
 export async function getMySurvivor() {
-  const jwt = await getToken();
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "GET",
-    headers: getBearerHeader(jwt),
+    headers: getAuthHeaders(),
   });
-    if (response.status === 404) {
+
+  if (response.status === 404) {
     return null;
   }
-    if (!response.ok) {
+
+  if (!response.ok) {
     throw new Error(`getMySurvivor failed: ${response.status}`);
   }
-    return await response.json();
+
+  return await response.json();
 }
 
-// POST /api/survivors 
+// POST /api/survivors
 export async function createSurvivor(name, type) {
-  const jwt = await getToken();
   const response = await fetch(`${API_URL}/api/survivors`, {
     method: "POST",
-    headers: getBearerHeader(jwt),
+    headers: getAuthHeaders(),
     body: JSON.stringify({ name, type }),
   });
 
@@ -66,16 +54,15 @@ export async function createSurvivor(name, type) {
 }
 
 export async function deleteMySurvivor() {
-  const jwt = await getToken();
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "DELETE",
-    headers: getBearerHeader(jwt),
+    headers: getAuthHeaders(),
   });
- 
+
   if (response.status === 404) {
     throw new Error("You don't have a survivor to delete.");
   }
- 
+
   if (!response.ok) {
     throw new Error(`deleteMySurvivor failed: ${response.status}`);
   }

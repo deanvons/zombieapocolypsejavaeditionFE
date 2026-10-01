@@ -3,13 +3,12 @@ import { survivorTypes } from "../components/SurvivorType.js";
 import "../css/CreateSurvivorPage.css";
 import { useNavigate } from "react-router";
 
-
-
 export default function CreateSurvivorPage() {
   
 const navigate = useNavigate()
 
   return (
+    
     <div className="selectpage-maincontent mx-auto w-full max-w-6xl px-4 py-4">
       <header>
         <button
@@ -30,5 +29,6 @@ const navigate = useNavigate()
         ))}
       </div>
     </div>
+    
   );
 }
