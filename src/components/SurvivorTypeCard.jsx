@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import "../css/HomePage.css";
-import {createSurvivor, getAllSurvivors} from "../service/survivor-service"
+import {createSurvivor} from "../service/survivor-service"
 import "../css/SurvivorTypeCard.css"
 import { useState } from "react";
 

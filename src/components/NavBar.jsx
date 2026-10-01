@@ -4,7 +4,7 @@ import "../css/NavBar.css";
 import "../css/SettingsPage.css";
 import keycloak from "../../keycloak";
 import { useSelector } from "react-redux";
-import { survivorTypes } from "./SurvivorType";
+
 
     
 
@@ -28,8 +28,7 @@ export default function NavBar({onLogout = () => {}}){
             <nav className="navbar">
                 <span className="navbar-text font-bold">
                     Welcome Survivorname
-                </span>{" "}
-                {/*should be {savedGame.survivorName}*/}
+                </span>{}  {/*redux for survivorname here*/}
                 <button
                     onClick={() => navigate("/profile")}
                     className="navbar-button"

@@ -6,7 +6,7 @@ import { useState } from "react";
 
 
 
-export default function CreateSurvivorPage({onSelect}) {
+export default function CreateSurvivorPage() {
   const [survivorName, setSurvivorname] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
