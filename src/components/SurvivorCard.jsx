@@ -1,3 +1,5 @@
+import '../css/SurvivorCard.css'
+
 function formatEnum(value) {
     return String(value)
         .toLowerCase()
@@ -10,23 +12,19 @@ export default function SurvivorCard({ survivor, isYou }) {
     const skills = survivor.skills ?? []
 
     return (
-        <div className={`flex items-start gap-4 rounded-lg border p-4 ${isYou ? 'border-2' : ''}`}>
-            <div className="h-12 w-12 shrink-0 rounded-full bg-neutral-200" />
+        <div className={`survivor-card ${isYou ? 'survivor-card-you' : ''}`}>
+            <div className="survivor-card-avatar" />
             <div>
-                <div className="flex items-center gap-2">
-                    <h2 className="text-lg font-semibold">{survivor.name}</h2>
-                    {isYou && (
-                        <span className="rounded-full bg-black px-2 py-0.5 text-xs font-semibold text-white">
-                            YOU
-                        </span>
-                    )}
+                <div className="survivor-card-name-row">
+                    <h2 className="survivor-card-name">{survivor.name}</h2>
+                    {isYou && <span className="survivor-card-you-badge">YOU</span>}
                 </div>
-                <p className="text-sm text-neutral-500">
+                <p className="survivor-card-subtitle">
                     {formatEnum(survivor.type)}
                     {survivor.username ? ` · ${survivor.username}` : ''}
                 </p>
                 {skills.length > 0 && (
-                    <p className="mt-1 text-sm text-neutral-500">{skills.map(formatEnum).join(', ')}</p>
+                    <p className="survivor-card-skills">{skills.map(formatEnum).join(', ')}</p>
                 )}
             </div>
         </div>
