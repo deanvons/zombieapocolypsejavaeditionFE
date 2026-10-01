@@ -36,16 +36,13 @@ export async function getMySurvivor() {
     method: "GET",
     headers: getBearerHeader(jwt),
   });
- 
-  if (response.status === 404) {
+    if (response.status === 404) {
     return null;
   }
- 
-  if (!response.ok) {
+    if (!response.ok) {
     throw new Error(`getMySurvivor failed: ${response.status}`);
   }
- 
-  return await response.json();
+    return await response.json();
 }
 
 // POST /api/survivors 

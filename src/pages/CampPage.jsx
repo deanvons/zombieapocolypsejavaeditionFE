@@ -3,13 +3,6 @@ import { getAllSurvivors, getMySurvivor } from '../service/survivor-service'
 import { useEffect, useState } from 'react'
 import ShowAllSurvivors from '../components/ShowAllSurvivors'
 
-function formatEnum(value) {
-    return String(value)
-        .toLowerCase()
-        .split(/[_\s]+/)
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
-}
 
 export default function CampPage() {
     const [ mySurvivor, setMySurvivor ] = useState(null);
