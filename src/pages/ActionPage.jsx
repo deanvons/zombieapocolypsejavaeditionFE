@@ -46,6 +46,11 @@ export default function ActionPage() {
   }, []);
 
   async function handlePerformAction(actionId) {
+    if (survivorId === null) {
+      setErrorMessage("No survivor found for your account.");
+      return;
+    }
+
     try {
       setErrorMessage(null);
       const result = await performAction(survivorId, actionId); 
@@ -64,7 +69,7 @@ export default function ActionPage() {
       <h2 className="action-subtitle">Pick an action to see how well you'll do.</h2>
       {errorMessage && <p className="action-error">{errorMessage}</p>}
       <div className="flex flex-col md:flex-row">
-          <ActionSelector actions={actions} selected={selectedAction} onActionClicked={setSelectedAction} onPerformClicked={handlePerformAction} />
+          <ActionSelector actions={actions} selected={selectedAction} onActionClicked={setSelectedAction} onPerformClicked={handlePerformAction} canPerform={survivorId !== null} />
           <ActionResult effectiveness={effectiveness}/>
       </div>
     </div>
