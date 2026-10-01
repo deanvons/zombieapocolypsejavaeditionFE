@@ -28,7 +28,7 @@ export default function NavBar({onLogout = () => {}, savedGame}){
     <nav className="navbar">
     <span className="navbar-text font-bold">Welcome Survivorname</span> {/*should be {savedGame.survivorName}*/}
     <button
-    onClick={() => navigate("/profile")} //temporary navigation for future implementation
+    onClick={() => navigate("/profile")}
           className="navbar-button">My profile</button>
     <button
     onClick={() => navigate("/camp")}
