@@ -3,10 +3,13 @@ import "../css/HomePage.css";
 import {createSurvivor} from "../service/survivor-service"
 import "../css/SurvivorTypeCard.css"
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSurvivor } from "../redux/slices/survivor/survivorSlice";
 
 
 export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
  const navigate = useNavigate()
+ const dispatch = useDispatch()
  const[hovered, setHovered] = useState(false)
 
   const handleSelect = async () => {
@@ -14,7 +17,8 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
       return;
     }
     try{
-      await createSurvivor(customName, survivor.type)
+      const createdSurvivor = await createSurvivor(customName, survivor.type)
+      dispatch(setSurvivor(createdSurvivor))
       navigate("/camp")
     }  catch (error){
       console.error("Could not create survivor: ", error.message)
