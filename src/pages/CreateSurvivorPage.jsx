@@ -22,7 +22,7 @@ export default function CreateSurvivorPage() {
 
   return (
     
-    <div className="selectpage-maincontent mx-auto w-full max-w-6xl px-4 py-4">
+    <div className="selectpage-maincontent">
       <header>
         <button
             onClick={() => navigate('/')}
@@ -61,7 +61,7 @@ export default function CreateSurvivorPage() {
     )}
 
 
-      <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3 items-stretch">
+      <div className="survivor-type-grid">
         {survivorTypes.map((survivor) => (
           <SurvivorTypeCard key={survivor.id} survivor={survivor} customName={survivorName} onValidate={handleInput} />
         ))}
