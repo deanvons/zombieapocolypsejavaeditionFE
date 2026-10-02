@@ -8,7 +8,7 @@ export default function ShowAllSurvivors({ mySurvivor, otherSurvivors }) {
     }
 
     return (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(14.5rem),1fr))] gap-4">
             {allSurvivors.map((survivor) => (
                 <SurvivorCard
                     key={survivor.id}
@@ -17,5 +17,5 @@ export default function ShowAllSurvivors({ mySurvivor, otherSurvivors }) {
                 />
             ))}
         </div>
-    )
+    );
 }

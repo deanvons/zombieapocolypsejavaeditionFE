@@ -1,9 +1,11 @@
-@import "../index.css";
-@import "tailwindcss";
+@reference "../index.css";
 
 @layer components {
     .survivor-card {
-        @apply flex items-start gap-4 rounded-lg border p-4
+        @apply flex items-start gap-4 rounded-lg border p-4 min-w-0
+    }
+    .survivor-card-info {
+        @apply min-w-0 flex-1 wrap-break-word
     }
     .survivor-card-you {
         @apply border-2

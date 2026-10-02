@@ -6,6 +6,7 @@ import { clearSurvivor } from "../redux/slices/survivor/survivorSlice";
 import { deleteMySurvivor } from "../service/survivor-service";
 
 
+
 const difficulties = [
     {value: 'easy', label: 'Easy', desc: 'More scavenging, less zombies.'},
     {value: 'normal', label: 'Normal', desc: 'Balanced challenge. Recommended'},
@@ -20,6 +21,8 @@ export default function SettingsPage({
     onChange = () => {},
 }){
 const [confirmDelete, setConfirmDelete] = useState(false)
+const [deleteError, setDeleteError] = useState("")
+const [isDeletingSurvivor, setIsDeletingSurvivor] = useState(false)
 const survivor = useSelector((state) => state.survivor.survivor)
 const dispatch = useDispatch()
 
@@ -34,6 +37,20 @@ const handleDelete = async () => {
 }
 
 const navigate = useNavigate()
+
+const deleteSurvivor = async () => {
+    setDeleteError("")
+    setIsDeletingSurvivor(true)
+    try {
+        await deleteMySurvivor()
+        navigate("/create-survivor")
+    } catch (error) {
+        setDeleteError(error.message)
+    } finally {
+        setIsDeletingSurvivor(false)
+    }
+}
+
 
 return(
     <div>
@@ -72,6 +89,25 @@ return(
                                 </div>
                             </button>
                 ))}
+            </div>
+        </section>
+
+        <section className="mb-10">
+            <p className="settings-option-title">DELETE YOUR SURVIVOR</p>
+            <div className="space-y-2">
+                    <button className="difficulty-card difficulty-card-disabled" onClick={deleteSurvivor} disabled={isDeletingSurvivor}>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="font-russo text-sm text-text">
+                                            Delete survivor 
+                                        </p>
+                                        
+                                        <p className="difficulty-card-description">This will permanently delete your current survivor and enable you to create a new one.</p>
+                                    </div>
+                                    
+                                </div>
+                    </button>
+                    {deleteError && <p className="save-card-warning" role="alert">{deleteError}</p>}
             </div>
         </section>
 
