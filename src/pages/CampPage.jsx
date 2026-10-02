@@ -32,7 +32,7 @@ export default function CampPage() {
             </header>
 
             <div className="camp-page-content">
-                <CampChat survivorName={mySurvivor?.name ?? 'Survivor'} />
+                <CampChat />
                 <section className="camp-roster" aria-labelledby="camp-roster-title">
                     <div className="camp-section-heading">
                         <div>

@@ -1,8 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { getCampMessages, sendCampMessage, subscribeToCampMessages } from '../service/camp-chat-service'
+import {
+    getCampMessages,
+    sendCampMessage,
+    startCampVisit,
+    subscribeToCampMessages,
+} from '../service/camp-chat-service'
 import '../css/CampChat.css'
 
 const MAX_MESSAGE_LENGTH = 500
+
+function getMessageLength(value) {
+    return Array.from(value).length
+}
 
 function formatTime(timestamp) {
     return new Intl.DateTimeFormat(undefined, {
@@ -17,37 +26,62 @@ function mergeMessages(current, incoming) {
     return [...byId.values()].sort((left, right) => new Date(left.createdAt) - new Date(right.createdAt))
 }
 
-export default function CampChat({ survivorName }) {
+export default function CampChat() {
     const [messages, setMessages] = useState([])
     const [messageText, setMessageText] = useState('')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [sending, setSending] = useState(false)
+    const [visitId, setVisitId] = useState(null)
+    const [connectionStatus, setConnectionStatus] = useState('connecting')
     const messageListRef = useRef(null)
+    const visitPromiseRef = useRef(null)
 
     useEffect(() => {
         let active = true
-        const enteredAt = Date.now()
-        const unsubscribe = subscribeToCampMessages((message) => {
-            if (active && new Date(message.createdAt).getTime() >= enteredAt) {
-                setMessages((current) => mergeMessages(current, [message]))
-            }
-        })
+        let closeStream = () => {}
 
-        getCampMessages(enteredAt)
-            .then((loadedMessages) => {
-                if (active) setMessages((current) => mergeMessages(current, loadedMessages))
-            })
-            .catch(() => {
-                if (active) setError('Messages could not be loaded.')
-            })
-            .finally(() => {
+        async function enterCamp() {
+            try {
+                visitPromiseRef.current ??= startCampVisit()
+                const visit = await visitPromiseRef.current
+                if (!active) return
+
+                setVisitId(visit.visitId)
+                const stream = subscribeToCampMessages(
+                    visit.visitId,
+                    (message) => {
+                        if (active) setMessages((current) => mergeMessages(current, [message]))
+                    },
+                    (status) => {
+                        if (active) setConnectionStatus(status)
+                    },
+                    (streamError) => {
+                        if (active) setError(streamError.message || 'The camp channel disconnected.')
+                    },
+                )
+                closeStream = stream.close
+                await stream.ready
+
+                let cursor = null
+                do {
+                    const page = await getCampMessages(visit.visitId, cursor)
+                    if (!active) return
+                    setMessages((current) => mergeMessages(current, page.items))
+                    cursor = page.nextCursor
+                } while (cursor)
+            } catch (visitError) {
+                if (active) setError(visitError.message || 'Camp chat could not be opened.')
+            } finally {
                 if (active) setLoading(false)
-            })
+            }
+        }
+
+        void enterCamp()
 
         return () => {
             active = false
-            unsubscribe()
+            closeStream()
         }
     }, [])
 
@@ -64,11 +98,11 @@ export default function CampChat({ survivorName }) {
         setSending(true)
         setError('')
         try {
-            const sentMessage = await sendCampMessage(content, survivorName)
+            const sentMessage = await sendCampMessage(visitId, content)
             setMessages((current) => mergeMessages(current, [sentMessage]))
             setMessageText('')
-        } catch {
-            setError('Your message could not be sent. Try again.')
+        } catch (sendError) {
+            setError(sendError.message || 'Your message could not be sent. Try again.')
         } finally {
             setSending(false)
         }
@@ -88,7 +122,12 @@ export default function CampChat({ survivorName }) {
                     <p className="camp-page-kicker">CAMP CHANNEL</p>
                     <h2 id="camp-chat-title">Messages</h2>
                 </div>
-                <span className="camp-chat-preview-status">LOCAL PREVIEW</span>
+                <span
+                    className={`camp-chat-connection-status camp-chat-connection-${connectionStatus}`}
+                    aria-live="polite"
+                >
+                    {connectionStatus === 'connected' ? 'LIVE' : connectionStatus.toUpperCase()}
+                </span>
             </header>
 
             <div className="camp-chat-visit-note">Showing messages from this visit</div>
@@ -124,15 +163,16 @@ export default function CampChat({ survivorName }) {
                 <textarea
                     id="camp-chat-input"
                     value={messageText}
-                    onChange={(event) => setMessageText(event.target.value.slice(0, MAX_MESSAGE_LENGTH))}
+                    onChange={(event) => {
+                        setMessageText(Array.from(event.target.value).slice(0, MAX_MESSAGE_LENGTH).join(''))
+                    }}
                     onKeyDown={handleKeyDown}
                     placeholder="Say something to the camp..."
-                    maxLength={MAX_MESSAGE_LENGTH}
                     rows={2}
                 />
                 <div className="camp-chat-compose-footer">
-                    <span>{messageText.length}/{MAX_MESSAGE_LENGTH}</span>
-                    <button type="submit" disabled={!messageText.trim() || sending}>
+                    <span>{getMessageLength(messageText)}/{MAX_MESSAGE_LENGTH}</span>
+                    <button type="submit" disabled={!messageText.trim() || sending || !visitId || loading}>
                         {sending ? 'Sending...' : 'Send'}
                     </button>
                 </div>
