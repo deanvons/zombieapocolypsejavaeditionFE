@@ -7,7 +7,6 @@ import { performAction } from "../service/survivor-service.js";
 import ActionSelector from "../components/ActionSelector.jsx";
 import ActionResult from "../components/ActionResult.jsx";
 
-
 export default function ActionPage() {
   const survivor = useSelector((state) => state.survivor.survivor);
   const survivorId = survivor?.id ?? null;
@@ -16,6 +15,9 @@ export default function ActionPage() {
   const [selectedAction, setSelectedAction] = useState(null);
 
   const [effectiveness, setEffectiveness] = useState(null);
+  // This is vibe coded.
+  const [resultRunKey, setResultRunKey] = useState(0);
+  const [resultActionType, setResultActionType] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -38,10 +40,15 @@ export default function ActionPage() {
       return;
     }
 
+    const actionType = selectedAction?.name?.trim().toLowerCase() ?? null;
+
     try {
       setErrorMessage(null);
       const result = await performAction(survivorId, actionId); 
       setEffectiveness(result.effectiveness);
+      // This is vibe coded: pass the action type so its matching sound plays.
+      setResultActionType(actionType);
+      setResultRunKey((key) => key + 1);
     } catch (e) {
       console.error(e);
       setErrorMessage(e.message);
@@ -57,7 +64,11 @@ export default function ActionPage() {
       {errorMessage && <p className="action-error">{errorMessage}</p>}
       <div className="flex flex-col md:flex-row">
           <ActionSelector actions={actions} selected={selectedAction} onActionClicked={setSelectedAction} onPerformClicked={handlePerformAction} canPerform={survivorId !== null} />
-          <ActionResult effectiveness={effectiveness}/>
+          <ActionResult
+            effectiveness={effectiveness}
+            resultRunKey={resultRunKey}
+            actionType={resultActionType}
+          />
       </div>
     </div>
     </>
