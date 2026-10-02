@@ -1,0 +1,23 @@
+@reference "../index.css";
+
+@layer components {
+    .delete-title {
+        @apply font-russo text-6xl md:text-8xl tracking-wider mb-3 leading-none;
+    }
+
+    .delete-question {
+        @apply font-russo text-2xl md:text-3xl text-text text-center tracking-wide max-w-2xl;
+    }
+
+    .delete-error {
+        @apply font-mono text-sm text-primary mt-6;
+    }
+
+    .delete-survivor-cancel-button {
+        @apply border-green/60 hover:border-green hover:bg-green/10 cursor-pointer active:scale-[0.99];
+    }
+
+    .delete-survivor-cancel-label {
+        @apply text-green;
+    }
+}
