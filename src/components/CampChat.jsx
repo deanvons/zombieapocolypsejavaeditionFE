@@ -61,7 +61,9 @@ export default function CampChat() {
                     },
                 )
                 closeStream = stream.close
-                await stream.ready
+                stream.ready.catch((streamError) => {
+                    if (active) setError(streamError.message || 'The camp channel could not be connected.')
+                })
 
                 let cursor = null
                 do {
@@ -134,7 +136,7 @@ export default function CampChat() {
 
             <div className="camp-chat-messages" ref={messageListRef} aria-live="polite" aria-relevant="additions">
                 {loading ? (
-                    <p className="camp-chat-state">Checking the channel...</p>
+                    <p className="camp-chat-state">Loading messages...</p>
                 ) : messages.length === 0 ? (
                     <div className="camp-chat-empty">
                         <span className="camp-chat-empty-mark" aria-hidden="true">...</span>
@@ -172,7 +174,7 @@ export default function CampChat() {
                 />
                 <div className="camp-chat-compose-footer">
                     <span>{getMessageLength(messageText)}/{MAX_MESSAGE_LENGTH}</span>
-                    <button type="submit" disabled={!messageText.trim() || sending || !visitId || loading}>
+                    <button type="submit" disabled={!messageText.trim() || sending || !visitId}>
                         {sending ? 'Sending...' : 'Send'}
                     </button>
                 </div>
