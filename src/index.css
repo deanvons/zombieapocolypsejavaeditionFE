@@ -27,6 +27,16 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+/*
+ * Dark scrollbars everywhere. color-scheme makes the browser use its dark UI (scrollbars, form controls),
+ * and scrollbar-color sets theme colors (thumb, track). Both are inherited, so scrollable boxes
+ * like the camp chat get them too.
+ */
+html {
+  color-scheme: dark;
+  scrollbar-color: color-mix(in srgb, var(--color-text-dim) 45%, var(--color-bg)) var(--color-bg);
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
