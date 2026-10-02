@@ -17,7 +17,7 @@ export default function ActionPage() {
   const [effectiveness, setEffectiveness] = useState(null);
   // This is vibe coded.
   const [resultRunKey, setResultRunKey] = useState(0);
-  const [isAttackResult, setIsAttackResult] = useState(false);
+  const [resultActionType, setResultActionType] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -40,13 +40,14 @@ export default function ActionPage() {
       return;
     }
 
-    const isAttack = selectedAction?.name?.trim().toLowerCase() === "attack";
+    const actionType = selectedAction?.name?.trim().toLowerCase() ?? null;
 
     try {
       setErrorMessage(null);
       const result = await performAction(survivorId, actionId); 
       setEffectiveness(result.effectiveness);
-      setIsAttackResult(isAttack);
+      // This is vibe coded: pass the action type so its matching sound plays.
+      setResultActionType(actionType);
       setResultRunKey((key) => key + 1);
     } catch (e) {
       console.error(e);
@@ -66,7 +67,7 @@ export default function ActionPage() {
           <ActionResult
             effectiveness={effectiveness}
             resultRunKey={resultRunKey}
-            isAttackResult={isAttackResult}
+            actionType={resultActionType}
           />
       </div>
     </div>

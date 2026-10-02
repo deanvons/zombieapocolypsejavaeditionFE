@@ -18,8 +18,22 @@
         @apply font-russo text-lg text-text tracking-wide mb-1;
     }
 
+    /* This is vibe coded: soften only the result panel border. */
+    .action-panel-soft-border {
+        border-color: color-mix(in srgb, var(--color-border) 55%, transparent);
+    }
+
+    .action-result-heading {
+        @apply text-2xl;
+    }
+
     .action-result-score {
         @apply font-russo text-7xl md:text-9xl text-green tracking-wider leading-none;
+    }
+
+    /* This is vibe coded: group the larger label above the centered score. */
+    .action-effectiveness-label {
+        @apply mb-3 text-center font-russo text-xl text-text-dim tracking-wide;
     }
 
     /* This is vibe coded. */
@@ -30,6 +44,135 @@
     .attack-score {
         animation: attack-score var(--attack-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
     }
+
+    /* This is vibe coded: soft healing light replaces the Attack boom for Heal. */
+    .heal-light {
+        position: relative;
+        isolation: isolate;
+        animation: heal-light 1800ms ease-out;
+    }
+
+    .heal-light::before {
+        content: "";
+        position: absolute;
+        inset: 12% 18%;
+        z-index: 0;
+        border-radius: 50%;
+        background: radial-gradient(ellipse, rgb(255 246 211 / 58%) 0%, rgb(204 255 226 / 30%) 42%, transparent 76%);
+        filter: blur(24px);
+        opacity: 0;
+        transform: scale(0.92);
+        pointer-events: none;
+        animation: heal-aura 1800ms ease-out;
+    }
+
+    .heal-light > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .heal-score {
+        animation: heal-score 1800ms ease-out;
+    }
+
+    /* This is vibe coded: Shelter exhales into a calm, warm glow after building. */
+    .shelter-relief {
+        position: relative;
+        isolation: isolate;
+        animation: shelter-relief 1700ms ease-out;
+    }
+
+    .shelter-relief::before {
+        content: "";
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 0;
+        height: 78%;
+        z-index: 0;
+        border-radius: 50%;
+        background:
+            radial-gradient(ellipse at bottom, rgb(255 176 92 / 32%) 0%, transparent 72%),
+            linear-gradient(to top, rgb(255 188 108 / 22%) 0%, rgb(255 225 174 / 13%) 38%, transparent 100%);
+        filter: blur(22px);
+        opacity: 0;
+        transform: translateY(22%) scale(0.92);
+        pointer-events: none;
+        animation: shelter-exhale-glow 1700ms ease-out;
+    }
+
+    .shelter-relief > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .shelter-score {
+        animation: shelter-score-exhale 1700ms ease-out;
+    }
+
+    /* This is vibe coded: Persuade sinks into a slow, horror-leaning darkness. */
+    .persuade-dread {
+        position: relative;
+        isolation: isolate;
+        animation: persuade-dread 2200ms ease-out forwards;
+    }
+
+    .persuade-dread::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background:
+            radial-gradient(ellipse at center, rgb(13 15 17 / 20%) 0%, rgb(4 5 7 / 86%) 100%),
+            linear-gradient(135deg, rgb(48 0 0 / 12%), rgb(0 0 0 / 62%));
+        opacity: 0;
+        pointer-events: none;
+        animation: persuade-vignette 2200ms ease-out forwards;
+    }
+
+    .persuade-dread > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .persuade-score {
+        animation: persuade-score 3600ms ease-in-out forwards;
+    }
+
+    /* This is vibe coded: Scavenge gets a subtle score thump and surrounding stars. */
+    .scavenge-score-stage {
+        position: relative;
+        isolation: isolate;
+    }
+
+    .scavenge-score {
+        animation: scavenge-score-pop 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        text-shadow: 0 0 14px rgb(255 220 130 / 62%);
+    }
+
+    .scavenge-sparkles {
+        position: absolute;
+        inset: -24% -28%;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .scavenge-star {
+        position: absolute;
+        color: #ffe29a;
+        font-size: 18px;
+        line-height: 1;
+        opacity: 0;
+        text-shadow: 0 0 10px rgb(255 224 154 / 90%);
+        animation: scavenge-sparkle 900ms ease-out var(--sparkle-delay) both;
+    }
+
+    .scavenge-star-one { left: 9%; top: 27%; --sparkle-delay: 0ms; }
+    .scavenge-star-two { left: 23%; top: 1%; --sparkle-delay: 70ms; font-size: 13px; }
+    .scavenge-star-three { right: 14%; top: 10%; --sparkle-delay: 130ms; }
+    .scavenge-star-four { right: 5%; top: 48%; --sparkle-delay: 40ms; font-size: 14px; }
+    .scavenge-star-five { right: 28%; bottom: -2%; --sparkle-delay: 180ms; }
+    .scavenge-star-six { left: 18%; bottom: 7%; --sparkle-delay: 100ms; font-size: 14px; }
 
     .action-error {
         @apply font-mono text-sm text-primary mt-4;
@@ -80,9 +223,92 @@
     100% { transform: scale(1); filter: brightness(1); }
 }
 
+@keyframes heal-light {
+    0%, 100% { box-shadow: 0 0 0 rgb(255 246 211 / 0%); }
+    34% { box-shadow: 0 0 38px 8px rgb(255 246 211 / 40%), inset 0 0 28px rgb(204 255 226 / 18%); }
+    70% { box-shadow: 0 0 20px 3px rgb(255 246 211 / 22%); }
+}
+
+@keyframes heal-aura {
+    0%, 100% { opacity: 0; transform: scale(0.92); }
+    30% { opacity: 0.9; transform: scale(1.08); }
+    72% { opacity: 0.4; transform: scale(1); }
+}
+
+@keyframes heal-score {
+    0%, 100% { filter: brightness(1); text-shadow: none; }
+    28% { filter: brightness(1.7); text-shadow: 0 0 16px rgb(255 246 211 / 90%), 0 0 36px rgb(204 255 226 / 72%); }
+    72% { filter: brightness(1.25); text-shadow: 0 0 10px rgb(255 246 211 / 60%); }
+}
+
+@keyframes shelter-relief {
+    0%, 100% { box-shadow: 0 0 0 rgb(255 177 93 / 0%); }
+    38% { box-shadow: 0 0 30px 4px rgb(255 177 93 / 22%); }
+    72% { box-shadow: 0 0 14px 2px rgb(255 224 176 / 12%); }
+}
+
+@keyframes shelter-exhale-glow {
+    0%, 100% { opacity: 0; transform: translateY(22%) scale(0.92); }
+    28% { opacity: 0.8; transform: translateY(4%) scale(1); }
+    74% { opacity: 0.2; transform: translateY(-24%) scale(1.08); }
+}
+
+@keyframes shelter-score-exhale {
+    0% { transform: translateY(4px) scale(0.98); filter: brightness(1); }
+    38% { transform: translateY(-5px) scale(1.035); filter: brightness(1.2); }
+    72% { transform: translateY(-1px) scale(1.01); filter: brightness(1.08); }
+    100% { transform: translateY(0) scale(1); filter: brightness(1); }
+}
+
+@keyframes persuade-dread {
+    0%, 20% { box-shadow: 0 0 0 transparent, inset 0 0 0 transparent; }
+    48% { box-shadow: 0 0 24px 2px rgb(84 0 0 / 22%), inset 0 0 24px rgb(0 0 0 / 24%); }
+    72% { box-shadow: 0 0 36px 5px rgb(84 0 0 / 28%), inset 0 0 42px rgb(0 0 0 / 45%); }
+    100% { box-shadow: 0 0 28px 3px rgb(65 0 0 / 24%), inset 0 0 38px rgb(0 0 0 / 42%); }
+}
+
+@keyframes persuade-vignette {
+    0%, 18% { opacity: 0; }
+    62% { opacity: 0.82; }
+    100% { opacity: 0.9; }
+}
+
+@keyframes persuade-score {
+    0% { color: var(--color-green); text-shadow: none; }
+    46%, 58% { color: #230006; text-shadow: 0 0 14px rgb(74 0 12 / 38%); }
+    100% { color: #aa102b; text-shadow: 0 0 12px rgb(170 16 43 / 28%); }
+}
+
+@keyframes scavenge-score-pop {
+    0% { transform: scale(0.94); filter: brightness(1); }
+    48% { transform: scale(1.1); filter: brightness(1.35); }
+    76% { transform: scale(0.99); }
+    100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes scavenge-sparkle {
+    0% { opacity: 0; transform: scale(0.4) rotate(-25deg); }
+    28% { opacity: 1; transform: scale(1.15) rotate(8deg); }
+    100% { opacity: 0; transform: scale(0.65) rotate(35deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .attack-impact,
-    .attack-score {
+    .attack-score,
+    .heal-light,
+    .heal-light::before,
+    .heal-score,
+    .shelter-relief,
+    .shelter-relief::before,
+    .shelter-score,
+    .persuade-dread,
+    .persuade-dread::before,
+    .persuade-score,
+    .scavenge-score,
+    .scavenge-star {
         animation: none;
     }
+
+    .scavenge-sparkles { display: none; }
+
 }
