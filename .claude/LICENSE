@@ -1,0 +1,71 @@
+# STEP 1 - GUARDRAILS (PreToolUse hook)
+#
+# Runs BEFORE every matching tool call. Claude Code sends the proposed call as
+# JSON on stdin. Exit 0 = allow. Exit 2 = block; whatever we write to stderr is
+# shown to the agent so it knows why.
+#
+# Why a hook as well as permission deny rules in settings.json?
+# Deny rules on Read/Edit cover Claude's file tools, but not a shell command
+# such as `cat .env` or `Get-Content .env`. This hook inspects the shell
+# command text too, closing that gap.
+#
+# Adapted from mattpocock/skills (git-guardrails-claude-code, MIT).
+
+$ErrorActionPreference = 'Stop'
+
+function Block([string]$reason) {
+    [Console]::Error.WriteLine("BLOCKED by .claude/hooks/guard.ps1: $reason. Ask the human to do this if it is really needed.")
+    exit 2
+}
+
+# Fail CLOSED: a hook that crashes exits non-zero but not 2, which Claude Code
+# treats as a non-blocking error - the tool call would go ahead. A guardrail
+# that can't read its input must block, not shrug.
+try {
+    $call = [Console]::In.ReadToEnd() | ConvertFrom-Json
+} catch {
+    Block "guard could not parse the tool call ($($_.Exception.Message))"
+}
+
+$tool    = $call.tool_name
+$command = [string]$call.tool_input.command
+$path    = [string]$call.tool_input.file_path
+
+# --- Irreversible or destructive shell commands -------------------------------
+$dangerous = @(
+    'git\s+push',                 # anything leaving the machine is a human decision
+    'git\s+reset\s+--hard',
+    'git\s+clean\s+-\w*f',
+    'git\s+branch\s+-D',
+    'git\s+(checkout|restore)\s+\.',
+    'rm\s+-\w*r\w*f|rm\s+-\w*f\w*r', # rm -rf / rm -fr
+    'Remove-Item\b.*-Recurse',
+    'dotnet\s+nuget\s+push'
+)
+
+# --- Files the agent must never read or change --------------------------------
+$protected = @(
+    '(^|[\\/\s"''])\.env(\.|\s|"|''|$)',  # .env, .env.local (not .env.example handled below)
+    '(^|[\\/])secrets[\\/]'
+)
+
+if ($command) {
+    foreach ($p in $dangerous) {
+        if ($command -match $p) { Block "'$command' matches dangerous pattern '$p'" }
+    }
+    foreach ($p in $protected) {
+        if ($command -match $p -and $command -notmatch '\.env\.example') {
+            Block "'$command' touches a protected file"
+        }
+    }
+}
+
+if ($path) {
+    foreach ($p in $protected) {
+        if ($path -match $p -and $path -notmatch '\.env\.example$') {
+            Block "$tool on '$path' - protected file"
+        }
+    }
+}
+
+exit 0

@@ -1,13 +1,35 @@
 import "../css/SurvivorPage.css";
 
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteItem } from "../service/survivor-service.js";
+import { updateSurvivor } from "../redux/slices/survivor/survivorSlice.js";
 import ShowSurvivorAttributes from "../components/SurvivorPage/SurvivorAttributesComponent";
 import ShowSurvivorGear from "../components/SurvivorPage/SurvivorGearComponent";
 import ShowSurvivorSkill from "../components/SurvivorPage/SurvivorSkillComponent";
 import { survivorTypes } from "../components/SurvivorType.js";
 
 export default function SurvivorPage() {
+  const dispatch = useDispatch();
   const survivor = useSelector((state) => state.survivor.survivor);
+  const [deletingItemId, setDeletingItemId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  async function handleDeleteItem(item) {
+    
+
+    try {
+      setErrorMessage(null);
+      setDeletingItemId(item.id);
+      await deleteItem(survivor.id, item.id);
+      dispatch(updateSurvivor({ gear: survivor.gear.filter((g) => g.id !== item.id) }));
+    } catch (e) {
+      console.error(e);
+      setErrorMessage(e.message);
+    } finally {
+      setDeletingItemId(null);
+    }
+  }
 
   if (!survivor) return <p>No survivor found.</p>;
 
@@ -45,7 +67,13 @@ export default function SurvivorPage() {
           <ShowSurvivorAttributes attributes={attributes} />
           <div className="flex flex-col gap-8">
             <ShowSurvivorSkill skills={survivor.skills} />
-            <ShowSurvivorGear gear={survivor.gear} maxLoad={maxLoad} />
+            <ShowSurvivorGear
+              gear={survivor.gear}
+              maxLoad={maxLoad}
+              onDeleteItem={handleDeleteItem}
+              deletingItemId={deletingItemId}
+            />
+            {errorMessage && <p className="font-mono text-sm text-primary">{errorMessage}</p>}
           </div>
         </div>
       </article>

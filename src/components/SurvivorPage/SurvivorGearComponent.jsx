@@ -3,7 +3,7 @@ function formatKind(type = "") {
     return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
 }
 
-export default function ShowSurvivorGear({ gear = [], maxLoad }) {
+export default function ShowSurvivorGear({ gear = [], maxLoad, onDeleteItem, deletingItemId }) {
     // Round to avoid float noise like 0.30000000000000004
     const totalWeight = Math.round(gear.reduce((sum, item) => sum + (item.weight ?? 0), 0) * 10) / 10;
 
@@ -25,6 +25,7 @@ export default function ShowSurvivorGear({ gear = [], maxLoad }) {
                             <th className="survivor-gear-heading w-[45%]">Item</th>
                             <th className="survivor-gear-heading">Kind</th>
                             <th className="survivor-gear-heading text-right">Weight</th>
+                            {onDeleteItem && <th className="survivor-gear-heading"><span className="sr-only">Delete</span></th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,19 @@ export default function ShowSurvivorGear({ gear = [], maxLoad }) {
                                 <td className="survivor-gear-cell text-right">
                                     <span className="survivor-gear-number">{item.weight} kg</span>
                                 </td>
+                                {onDeleteItem && (
+                                    <td className="survivor-gear-cell text-right pl-4">
+                                        <button
+                                            type="button"
+                                            className="survivor-gear-delete"
+                                            disabled={deletingItemId === item.id}
+                                            onClick={() => onDeleteItem(item)}
+                                            aria-label={`Delete ${item.name}`}
+                                        >
+                                            {deletingItemId === item.id ? "..." : "Delete"}
+                                        </button>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>
