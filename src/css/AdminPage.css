@@ -1,0 +1,14 @@
+@reference "../index.css";
+
+
+
+@layer components {
+    .audit-entries-container {
+        @apply w-full flex flex-col gap-2 h-150 overflow-y-auto overflow-x-hidden border rounded-sm p-2;
+    }
+    .audit-entry{
+        @apply w-full flex flex-row flex-wrap items-center gap-x-2 gap-y-1 border border-border rounded-sm bg-panel p-3 font-mono text-xs text-text wrap-break-word hover:border-primary transition-colors;
+    }
+
+}
+
