@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 import { login, logout } from "../service/token-service";
 import { getMySurvivor } from "../service/survivor-service.js";
+import AmbientMusic from "../components/AmbientMusic.jsx";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 
 export default function HomePage() {
@@ -58,6 +59,9 @@ export default function HomePage() {
   ];
 
   return (
+    // This is vibe coded: let the public homepage use the same music controller.
+    <>
+    <AmbientMusic enabled={!user.authenticated} />
     <div className="homepage-maincontent">
       <div className="text-center mb-16">
         <p className="blinking-title animate-pulse-red">
@@ -116,5 +120,6 @@ export default function HomePage() {
         )}
       </nav>
     </div>
+    </>
   );
 }
