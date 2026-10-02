@@ -1,39 +1,12 @@
-import { useNavigate } from "react-router";
-import "../css/HomePage.css";
-import {createSurvivor} from "../service/survivor-service"
 import "../css/SurvivorTypeCard.css"
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSurvivor } from "../redux/slices/survivor/survivorSlice";
 
 
-export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
- const navigate = useNavigate()
- const dispatch = useDispatch()
- const[hovered, setHovered] = useState(false)
-
-  const handleSelect = async () => {
-    if(onValidate && !onValidate()){
-      return;
-    }
-    try{
-      const createdSurvivor = await createSurvivor(customName, survivor.type)
-      dispatch(setSurvivor(createdSurvivor))
-      navigate("/camp")
-    }  catch (error){
-      console.error("Could not create survivor: ", error.message)
-    }  
-  }
-  
+export default function SurvivorTypeCard({survivor, onClickCard}) {
 
   return (
     <>
-    <div className={
-      `text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full
-      ${hovered ? 'border-border-bright bg-panel-hover -translate-y-0.5' : 'border-border bg-panel'}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={handleSelect}>
+    <div className="text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full border-border bg-panel hover:border-border-bright hover:bg-panel-hover hover:-translate-y-0.5"
+      onClick={() => onClickCard(survivor.type)}>
 
     <div className="survivor-name-box">
       <h3 className="survivor-name">{survivor.name}</h3>

@@ -1,22 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 import SurvivorTypeCard from "../components/SurvivorTypeCard";
 import { survivorTypes } from "../components/SurvivorType.js";
+import { createSurvivor } from "../service/survivor-service.js";
+import { setSurvivor } from "../redux/slices/survivor/survivorSlice";
 import "../css/CreateSurvivorPage.css";
 
 export default function CreateSurvivorPage() {
   const [survivorName, setSurvivorName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleInput = () => {
+  const handleChooseSurvivor = async (survivorType) => {
     if (!survivorName.trim()) {
       setErrorMessage("You must enter a name");
-      return false;
+      return;
     }
-
     setErrorMessage("");
-    return true;
+
+    try {
+      const createdSurvivor = await createSurvivor(survivorName, survivorType);
+      dispatch(setSurvivor(createdSurvivor));
+      navigate("/camp");
+    } catch (error) {
+      console.error("Could not create survivor:", error);
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -72,7 +83,7 @@ export default function CreateSurvivorPage() {
 
       <div className="survivor-type-grid">
         {survivorTypes.map((survivor) => (
-          <SurvivorTypeCard key={survivor.id} survivor={survivor} customName={survivorName} onValidate={handleInput} />
+          <SurvivorTypeCard key={survivor.id} survivor={survivor} onClickCard={handleChooseSurvivor} />
         ))}
       </div>
     </div>
