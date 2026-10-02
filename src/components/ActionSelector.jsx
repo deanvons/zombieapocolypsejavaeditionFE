@@ -17,7 +17,8 @@ export default function ActionSelector({actions, onActionClicked, onPerformClick
                     onActionClicked={() => onActionClicked(action)}
                 />
             ))}
-            {missingItems.length > 0 && (
+            {/* Missing items replace the Perform button */}
+            {missingItems.length > 0 ? (
                 <div className="px-8 md:px-18 pt-4">
                     <div className="action-missing-box" role="alert">
                         <p className="action-missing-title">You do not have the required items</p>
@@ -29,19 +30,20 @@ export default function ActionSelector({actions, onActionClicked, onPerformClick
                         </Link>
                     </div>
                 </div>
+            ) : (
+                <div className="flex pt-4 px-8 md:px-18 items-center">
+                    <button
+                        className="group action-entry action-entry-inactive enabled:hover:border-primary/60 enabled:hover:bg-primary/5 disabled:opacity-40 disabled:cursor-not-allowed"
+                        type="button"
+                        disabled={!selected || !canPerform}
+                        onClick={() => onPerformClicked(selected.id)}
+                    >
+                        <p className="font-russo text-sm text-text group-enabled:group-hover:text-primary">
+                            Perform Action
+                        </p>
+                    </button>
+                </div>
             )}
-            <div className="flex pt-4 px-8 md:px-18 items-center">
-                <button
-                    className="group action-entry action-entry-inactive enabled:hover:border-primary/60 enabled:hover:bg-primary/5 disabled:opacity-40 disabled:cursor-not-allowed"
-                    type="button"
-                    disabled={!selected || !canPerform}
-                    onClick={() => onPerformClicked(selected.id)}
-                >
-                    <p className="font-russo text-sm text-text group-enabled:group-hover:text-primary">
-                        Perform Action
-                    </p>
-                </button>
-            </div>
         </div>
     )
 }
