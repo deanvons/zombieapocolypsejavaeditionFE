@@ -24,6 +24,6 @@
     }
 
     .survivor-type-grid{
-        @apply mt-3 grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-[repeat(3,minmax(0,1fr))] items-stretch
+        @apply mt-3 grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-none md:grid-flow-col md:auto-cols-[minmax(0,1fr)] items-stretch
     }
 }
