@@ -27,4 +27,3 @@
         @apply mt-3 grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-[repeat(3,minmax(0,1fr))] items-stretch
     }
 }
-
