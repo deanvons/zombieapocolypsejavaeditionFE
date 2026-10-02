@@ -22,6 +22,15 @@
         @apply font-russo text-7xl md:text-9xl text-green tracking-wider leading-none;
     }
 
+    /* This is vibe coded. */
+    .attack-impact {
+        animation: attack-impact var(--attack-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .attack-score {
+        animation: attack-score var(--attack-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
     .action-error {
         @apply font-mono text-sm text-primary mt-4;
     }
@@ -48,5 +57,32 @@
 
     .action-entry-indicator {
         @apply w-2 h-2 rounded-full bg-primary shrink-0 ml-4;
+    }
+}
+
+@keyframes attack-impact {
+    0% { transform: scale(0.97); box-shadow: 0 0 0 transparent; }
+    14% { transform: scale(var(--box-pop-scale)); box-shadow: 0 0 var(--impact-glow) rgb(220 38 38 / 65%); }
+    32% { transform: scale(0.99); box-shadow: 0 0 0 transparent; }
+    50% { transform: scale(var(--box-rebound-scale)); box-shadow: 0 0 var(--impact-rebound-glow) rgb(220 38 38 / 35%); }
+    68% { transform: scale(1); box-shadow: 0 0 0 transparent; }
+    82% { transform: scale(var(--box-late-pulse-scale)); }
+    100% { transform: scale(1); box-shadow: 0 0 0 transparent; }
+}
+
+@keyframes attack-score {
+    0% { transform: scale(0.55); filter: brightness(2.4); }
+    16% { transform: scale(var(--score-pop-scale)); filter: brightness(1.8); }
+    32% { transform: scale(0.96); }
+    48% { transform: scale(var(--score-rebound-scale)); }
+    64% { transform: scale(0.99); }
+    78% { transform: scale(var(--score-late-pulse-scale)); }
+    100% { transform: scale(1); filter: brightness(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .attack-impact,
+    .attack-score {
+        animation: none;
     }
 }
