@@ -92,4 +92,27 @@ export const survivorTypes = [
       "Motivational Speaking",
     ],
   },
+  {
+    id: 5,
+    name: "EXTREME",
+    type: "EXTREME",
+    // This is vibe coded: use Marius's survivor portrait.
+    image: "/marius.png",
+    attributes: {
+      Strength: 8,
+      Agility: 5,
+      Trustworthiness: 7,
+      Intelligence: 8,
+      Courage: 10,
+      Endurance: 2,
+      Leadership: 8,
+    },
+    skills: [
+      "Improvised Combat",
+      "Quick Draw",
+      "Pharmacology",
+      "Intimidation",
+      "Smoke Breaks",
+    ],
+  },
 ];
