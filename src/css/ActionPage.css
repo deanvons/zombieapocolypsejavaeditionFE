@@ -201,6 +201,45 @@
     .action-entry-indicator {
         @apply w-2 h-2 rounded-full bg-primary shrink-0 ml-4;
     }
+
+    /* ---------- Required items ---------- */
+
+    .action-entry-lock {
+        @apply size-3.5 shrink-0 text-text-dim;
+    }
+
+    .action-requirements {
+        @apply flex flex-wrap items-center gap-1.5 mt-3;
+    }
+
+    /* Chip per required item: green when the survivor has it, red when it's missing */
+    .action-requirement {
+        @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-xs;
+    }
+
+    .action-requirement-owned {
+        @apply border-green/50 bg-green/10 text-green;
+    }
+
+    .action-requirement-missing {
+        @apply border-primary/50 bg-primary/10 text-primary;
+    }
+
+    .action-missing-box {
+        @apply rounded-sm border border-primary/40 bg-primary/5 px-4 py-3;
+    }
+
+    .action-missing-title {
+        @apply font-russo text-sm text-primary;
+    }
+
+    .action-missing-list {
+        @apply mt-1 font-mono text-xs text-text-dim;
+    }
+
+    .action-missing-link {
+        @apply mt-2 inline-block font-mono text-xs text-text transition-colors hover:text-primary;
+    }
 }
 
 @keyframes attack-impact {

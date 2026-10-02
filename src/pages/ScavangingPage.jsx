@@ -88,14 +88,15 @@ export default function ScavangingPage() {
   // Stop the search timer if the user leaves the page mid-search
   useEffect(() => () => clearTimeout(timeoutRef.current), []);
 
-  // Find the backend's "Scavenge" action; its effectiveness decides the loot
+  // The backend has no Scavenge action anymore; Forage replaced it with the same attribute weights,
+  // so its effectiveness decides the loot
   useEffect(() => {
     async function loadScavengeAction() {
       try {
         const actions = await getAllActions();
-        const scavenge = actions.find((a) => a.name === "Scavenge");
+        const scavenge = actions.find((a) => a.name === "Forage");
         if (!scavenge) {
-          setErrorMessage("The Scavenge action is missing.");
+          setErrorMessage("The Forage action is missing.");
           return;
         }
         setScavengeActionId(scavenge.id);
