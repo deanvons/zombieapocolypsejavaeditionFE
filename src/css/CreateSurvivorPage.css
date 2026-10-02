@@ -16,4 +16,23 @@
     .create-survivor-type-grid {
         @apply mt-3 grid grid-cols-1 gap-4 md:grid-cols-3;
     }
+
+    .input-alert-box{
+        @apply absolute w-64 bg-bg border border-border p-3 rounded-md shadow-xl z-50 left-1/2 -translate-x-1/2 text-center
+    }
+
+    .create-title{
+        @apply mb-3 text-center font-russo text-3xl leading-tight tracking-wider md:text-4xl
+    }
+    
+    .name-label{
+        @apply font-mono text-xs uppercase tracking-widest text-text-dim block mb-2
+    }
+
+    .input-field{
+        @apply 
+        w-full bg-panel border rounded-sm px-4 py-3 font-russo text-sm text-text tracking-wide
+        placeholder:text-text-dim placeholder:font-sans placeholder:font-normal placeholder:tracking-normal
+        focus:outline-none transition-colors duration-150
+    }
 }

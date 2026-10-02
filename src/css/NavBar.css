@@ -4,10 +4,10 @@
 
 @layer components {
     .navbar-header{
-        @apply w-full border-b border-border shadow-lg shadow-primary/30 mb-15
+        @apply w-full border-b border-border shadow-lg shadow-primary/30 mb-15 sticky
     }
     .navbar{
-        @apply flex m-10 items-center gap-5 p-4 
+        @apply flex m-10 items-center gap-5 p-4
     }
       .navbar-button{
         @apply font-mono text-sm px-4 py-2 rounded-sm border border-border text-text-dim hover:border-border-bright hover:text-text transition-colors
@@ -18,7 +18,7 @@
     }
 
     .navbar-text{
-        @apply font-mono text-text-dim
+        @apply font-mono text-text-dim mr-5
     }
 
 }
