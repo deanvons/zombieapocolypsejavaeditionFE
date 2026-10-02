@@ -1,6 +1,22 @@
 @reference "../index.css";
 
 @layer components {
+    .create-survivor-maincontent {
+        @apply mx-auto w-full max-w-6xl px-4 py-4;
+    }
+
+    .create-survivor-back-button {
+        @apply m-10;
+    }
+
+    .create-survivor-title {
+        @apply mb-3 text-center font-russo text-3xl leading-tight tracking-wider md:text-4xl;
+    }
+
+    .create-survivor-type-grid {
+        @apply mt-3 grid grid-cols-1 gap-4 md:grid-cols-3;
+    }
+
     .input-alert-box{
         @apply absolute w-64 bg-bg border border-border p-3 rounded-md shadow-xl z-50 left-1/2 -translate-x-1/2 text-center
     }
@@ -20,4 +36,3 @@
         focus:outline-none transition-colors duration-150
     }
 }
-
