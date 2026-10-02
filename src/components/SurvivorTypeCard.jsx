@@ -3,10 +3,13 @@ import "../css/HomePage.css";
 import {createSurvivor} from "../service/survivor-service"
 import "../css/SurvivorTypeCard.css"
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSurvivor } from "../redux/slices/survivor/survivorSlice";
 
 
 export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
  const navigate = useNavigate()
+ const dispatch = useDispatch()
  const[hovered, setHovered] = useState(false)
 
   const handleSelect = async () => {
@@ -14,7 +17,8 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
       return;
     }
     try{
-      await createSurvivor(customName, survivor.type)
+      const createdSurvivor = await createSurvivor(customName, survivor.type)
+      dispatch(setSurvivor(createdSurvivor))
       navigate("/camp")
     }  catch (error){
       console.error("Could not create survivor: ", error.message)
@@ -31,21 +35,24 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
       onMouseLeave={() => setHovered(false)}
       onClick={handleSelect}>
 
-    <div className="flex items-center justify-between p-5 border-b border-border">
+    <div className="survivor-name-box">
       <h3 className="survivor-name">{survivor.name}</h3>
     </div>
-    <div>
+
+    <div className="picture-box">
       <img
-        className="h-[clamp(15rem,18vh,9rem)] w-full rounded-base object-contain bg-neutral-primary-soft"
+        className="w-full h-full object-contain"
         src={survivor.image}
         alt={`${survivor.name.toLowerCase()} survivor`}
       />
     </div>
-    <div className="space-y-2">
-      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2">Attributes</h4>
-      <dl className="mb-3 space-y-1.5 text-xs text-body">
+
+
+    <div className="space-y-2 m-2">
+      <h4 className="small-title">Attributes</h4>
+      <dl className="font-mono mb-3 space-y-1.5 text-xs text-body">
         {Object.entries(survivor.attributes).map(([attribute, value]) => (
-          <div className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-2" key={attribute}>
+          <div className="attribute-title" key={attribute}>
             <dt>{attribute}</dt>
             <dd className="flex items-center gap-2">
               <div
@@ -61,7 +68,7 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
                   style={{ width: `${(value / 10) * 100}%` }}
                 />
               </div>
-              <span className="w-10 text-right font-mono text-xs text-text">
+              <span className="attribute-value">
                 {value}/10
               </span>
             </dd>

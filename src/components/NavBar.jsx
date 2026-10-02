@@ -3,7 +3,8 @@ import { useState } from "react";
 import "../css/NavBar.css";
 import "../css/SettingsPage.css";
 import keycloak from "../../keycloak";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearSurvivor } from "../redux/slices/survivor/survivorSlice";
 
 
     
@@ -12,9 +13,11 @@ export default function NavBar({onLogout = () => {}}){
     const navigate = useNavigate()
     const isAdmin = keycloak.hasRealmRole("ADMIN")
     const [confirmLogout, setConfirmLogout] = useState(false)
-  
+    const dispatch = useDispatch()
+
     const handleLogout = () => {
         onLogout();
+        dispatch(clearSurvivor());
         setConfirmLogout(false);
         keycloak.logout({
             redirectUri: window.location.origin + "/",
@@ -22,13 +25,20 @@ export default function NavBar({onLogout = () => {}}){
     };
 
     const displayName = useSelector((state) => state.user?.displayName); //getting displayName from redux
+    const survivor = useSelector((state) => state.survivor.survivor);
 
     return (
         <header className="navbar-header">
             <nav className="navbar">
                 <span className="navbar-text font-bold">
-                    Welcome Survivorname
-                </span>{}  {/*redux for survivorname here*/}
+                    Welcome {survivor?.name ?? "survivor"}
+                </span>
+                <button
+                    onClick={() => navigate("/")}
+                    className="navbar-button"
+                >
+                    Home
+                </button>
                 <button
                     onClick={() => navigate("/profile")}
                     className="navbar-button"

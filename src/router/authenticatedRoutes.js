@@ -7,6 +7,7 @@ import AdminPage from "../pages/AdminPage.jsx";
 import SurvivorPage from "../pages/SurvivorPage.jsx";
 import AppLayout from "../layouts/AppLayout.jsx";
 import ActionPage from "../pages/ActionPage.jsx";
+import DeleteSurvivorPage from "../pages/DeleteSurvivorPage.jsx";
 
 const authenticatedRoutes = [
     {
@@ -39,6 +40,10 @@ const authenticatedRoutes = [
         {
         path: "/actions",
         Component: ActionPage,
+        },
+        {
+        path: "/delete-survivor",
+        Component: DeleteSurvivorPage,
         }
       ],
     },
