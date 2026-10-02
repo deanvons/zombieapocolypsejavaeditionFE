@@ -55,19 +55,18 @@ export const survivorTypes = [
   {
     id: 3,
     name: "LEADER",
-    // Backend enum is TESTSURVIVOR; "Leader" is only the frontend name
-    type: "TESTSURVIVOR",
+    type: "Leader",
     image: "/deanWarrior.png",
-    adminOnly: true,
+    // Same defaults as the backend's SurvivorType.LEADER
     attributes: {
-      Strength: 10,
-      Agility: 10,
-      Trustworthiness: 10,
-      Intelligence: 10,
-      Courage: 10,
-      Endurance: 10,
-      Leadership: 10,
+      Strength: 4,
+      Agility: 3,
+      Trustworthiness: 7,
+      Intelligence: 6,
+      Courage: 7,
+      Endurance: 3,
+      Leadership: 9,
     },
-    skills: ["Weapon Maintenance", "Blunt Weapons"],
+    skills: ["Leadership", "Motivational Speaking", "Negotiation"],
   },
 ];
