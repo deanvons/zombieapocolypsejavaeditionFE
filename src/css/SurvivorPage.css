@@ -1,1 +1,123 @@
 @reference "../index.css";
+
+/*
+ * Glitch for the survivor name: mostly still, with short irregular bursts.
+ * steps(1) makes every change an instant jump instead of a fade, and the two
+ * animations use different lengths (6.7s / 9.3s) so the pattern rarely repeats.
+ */
+@keyframes survivor-glitch-flicker {
+    0%, 41%, 43%, 45.5%, 78%, 79.2%, 100% { opacity: 1; }
+    42%   { opacity: 0.6; }
+    44.5% { opacity: 0.8; }
+    78.6% { opacity: 0.65; }
+}
+
+@keyframes survivor-glitch-shift {
+    0%, 62%, 63.8%, 88%, 89%, 100% { transform: none; text-shadow: none; }
+    /* Faint split in the theme's blue (#19538A) */
+    62.5% { transform: translateX(-2px); text-shadow: 2px 0 rgba(25, 83, 138, 0.6); }
+    63.2% { transform: translateX(1px); text-shadow: -1px 0 rgba(25, 83, 138, 0.5); }
+    88.5% { transform: translateX(1px); text-shadow: -2px 0 rgba(25, 83, 138, 0.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .survivor-page-name {
+        animation: none;
+    }
+}
+
+@layer components {
+    /* Layout (flex, grid, gaps) lives as Tailwind classes in the JSX; this file holds the looks */
+
+    .survivor-page-card {
+        @apply px-4 md:px-12 rounded-sm;
+    }
+
+    /* ---------- Header: avatar, name and type ---------- */
+    .survivor-avatar {
+        @apply flex-none size-44 m-6 pt-3 rounded-full overflow-hidden border-2 border-text-dim bg-panel;
+    }
+
+    .survivor-avatar > img {
+        @apply h-full w-full object-cover object-top;
+    }
+
+    .survivor-page-name {
+        @apply font-mono text-6xl uppercase tracking-[0.4em] text-primary mb-6 text-center sm:text-left pl-[0.4em] sm:pl-0;
+        animation:
+            survivor-glitch-flicker 6.7s steps(1, end) infinite,
+            survivor-glitch-shift 9.3s steps(1, end) infinite;
+    }
+
+    .survivor-type-tag {
+        @apply font-mono text-lg uppercase tracking-[0.3em] text-text border border-text-dim rounded-sm pl-3 pr-[calc(0.75rem-0.3em)] py-1;
+    }
+
+
+    /* Bordered box around Skills and Gear */
+    .survivor-panel {
+        @apply p-6 border border-border rounded-lg bg-panel;
+    }
+
+    .survivor-section-title {
+        @apply font-sans text-2xl font-semibold text-text;
+    }
+
+    .survivor-empty {
+        @apply text-text-dim;
+    }
+
+
+
+
+    /* ---------- Attributes ---------- */
+    .survivor-attribute-label {
+        @apply font-sans text-base text-text capitalize;
+    }
+
+    .survivor-attribute-track {
+        @apply h-3 rounded-full bg-border overflow-hidden;
+    }
+
+    .survivor-attribute-fill {
+        @apply h-full rounded-full bg-text-dim;
+    }
+
+    .survivor-attribute-value {
+        @apply font-sans text-base text-text text-right tabular-nums;
+    }
+
+
+
+    /* ---------- Skills ---------- */
+    .survivor-skill-chip {
+        @apply font-sans text-base text-text px-4 py-1.5 border border-text-dim rounded-full;
+    }
+
+
+
+    /* ---------- Gear ---------- */
+    .survivor-gear-load {
+        @apply font-sans text-base text-text-dim;
+    }
+
+    .survivor-gear-number {
+        @apply font-mono text-text;
+    }
+
+    .survivor-gear-table {
+        @apply w-full text-left;
+    }
+
+    .survivor-gear-heading {
+        @apply font-sans text-base font-medium text-text-dim pb-3 border-b-2 border-border;
+    }
+
+    .survivor-gear-row {
+        @apply border-b border-border;
+    }
+
+    .survivor-gear-cell {
+        @apply font-sans text-base text-text py-3;
+    }
+}
