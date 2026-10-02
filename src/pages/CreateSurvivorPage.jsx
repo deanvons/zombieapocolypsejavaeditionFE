@@ -61,7 +61,7 @@ export default function CreateSurvivorPage() {
     )}
 
 
-      <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3 items-stretch">
         {survivorTypes.map((survivor) => (
           <SurvivorTypeCard key={survivor.id} survivor={survivor} customName={survivorName} onValidate={handleInput} />
         ))}

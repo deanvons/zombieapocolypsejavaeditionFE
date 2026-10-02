@@ -23,9 +23,9 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
   
 
   return (
-    <>
-    <button className={
-      `text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full
+  <div className="h-full flex flex-col">
+    <div className={
+      `text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full p-2 
       ${hovered ? 'border-border-bright bg-panel-hover -translate-y-0.5' : 'border-border bg-panel'}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -34,16 +34,19 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
     <div className="flex items-center justify-between p-5 border-b border-border">
       <h3 className="survivor-name">{survivor.name}</h3>
     </div>
-    <div>
+
+    <div className="relative h-80 overflow-hidden bg-panel">
       <img
-        className="h-[clamp(15rem,18vh,9rem)] w-full rounded-base object-contain bg-neutral-primary-soft"
+        className="w-full h-full object-contain"
         src={survivor.image}
         alt={`${survivor.name.toLowerCase()} survivor`}
       />
     </div>
-    <div className="space-y-2">
-      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2">Attributes</h4>
-      <dl className="mb-3 space-y-1.5 text-xs text-body">
+
+
+    <div className="space-y-2 m-2">
+      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2 mt-5">Attributes</h4>
+      <dl className="font-mono mb-3 space-y-1.5 text-xs text-body">
         {Object.entries(survivor.attributes).map(([attribute, value]) => (
           <div className="grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-2" key={attribute}>
             <dt>{attribute}</dt>
@@ -68,30 +71,29 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
           </div>
         ))}
       </dl>
-      </div>
-      <div className="flex flex-wrap gap-1.5">
-      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2">Skills</h4>
-      <ul className="mb-3 list-inside list-disc text-xs leading-5 text-body">
-        {survivor.skills.map((skill) => (
-          <li key={skill}>{skill}</li>
-        ))}
-      </ul>
-      </div>
-
-      <button
-        type="button"
-        className="group menu-button menu-button-active mt-auto w-full px-4 py-2"
-        onClick={handleSelect}
-      >
-        <span className="flex items-center justify-between">
-          <span className="button-label button-label-active">Select</span>
-          <span className="button-arrow" aria-hidden="true">&rarr;</span>
-        </span>
-        <span className="button-indicator" aria-hidden="true" />
-      </button>
+    </div>
     
-    </button>
-    </>
+    <div className="mt-auto pt-4">
+      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2 mt-5">Skills</h4>
+      <div  className="flex flex-wrap gap-1.5">
+        {survivor.skills.map((skill) => (
+          <span 
+          key={skill}
+          className="font-mono text-xs px-2 py-0.5 rounded-sm border border-border-bright text-text-dim bg-surface">{skill}</span>
+        ))}
+      </div>
+      </div>
+       
+      
+       <button
+              type="button"
+              className="group menu-button menu-button-active mt-auto w-full px-4 py-2 w-full py-2 font-russo text-sm tracking-widest uppercase text-center rounded-sm border transition-all duration-150"
+              onClick={handleSelect}
+            >
+                Select
+            </button>
+    </div>
+  </div>
   );
   
 }
