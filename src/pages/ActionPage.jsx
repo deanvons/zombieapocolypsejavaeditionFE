@@ -1,15 +1,17 @@
 import "../css/ActionPage.css";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getAllActions } from "../service/action-service.js";
-import { getMySurvivor, performAction } from "../service/survivor-service.js";
+import { performAction } from "../service/survivor-service.js";
 
 import ActionSelector from "../components/ActionSelector.jsx";
 import ActionResult from "../components/ActionResult.jsx";
 
 
 export default function ActionPage() {
-  const [survivorId, setSurvivorId] = useState(null);
-  
+  const survivor = useSelector((state) => state.survivor.survivor);
+  const survivorId = survivor?.id ?? null;
+
   const [actions, setActions] = useState([]);
   const [selectedAction, setSelectedAction] = useState(null);
 
@@ -27,22 +29,7 @@ export default function ActionPage() {
       }
     }
 
-    async function loadSurvivor() {
-      try {
-        const survivor = await getMySurvivor();
-        if (survivor === null) {
-          setErrorMessage("No survivor found for your account.");
-          return;
-        }
-        setSurvivorId(survivor.id);
-      } catch (e) {
-        console.error(e);
-        setErrorMessage(e.message);
-      }
-    }
-
     loadActions();
-    loadSurvivor();
   }, []);
 
   async function handlePerformAction(actionId) {
@@ -61,12 +48,12 @@ export default function ActionPage() {
     }
   }
 
-  //TODO add survivors name)
   return (
     <>
     <div className="m-8">
       <h1 className="action-title">Perform an Action</h1>
-      <h2 className="action-subtitle">Pick an action to see how well you'll do.</h2>
+      <h2 className="action-subtitle">Pick an action to see how well {survivor?.name ?? "you"} will do.</h2>
+      {survivor === null && <p className="action-error">No survivor found for your account.</p>}
       {errorMessage && <p className="action-error">{errorMessage}</p>}
       <div className="flex flex-col md:flex-row">
           <ActionSelector actions={actions} selected={selectedAction} onActionClicked={setSelectedAction} onPerformClicked={handlePerformAction} canPerform={survivorId !== null} />

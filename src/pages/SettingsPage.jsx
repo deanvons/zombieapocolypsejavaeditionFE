@@ -1,6 +1,9 @@
 import { useState } from "react"
 import "../css/SettingsPage.css";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { clearSurvivor } from "../redux/slices/survivor/survivorSlice";
+import { deleteMySurvivor } from "../service/survivor-service";
 
 
 const difficulties = [
@@ -13,15 +16,20 @@ const difficulties = [
 //will need to add defaultsettings object for this (now its not possible to change) and fetch savedGame
 
 export default function SettingsPage({
-    settings = {difficulty: 'normal'}, 
-    savedGame, 
-    onChange = () => {}, 
-    onDeleteSave = () => {}
+    settings = {difficulty: 'normal'},
+    onChange = () => {},
 }){
 const [confirmDelete, setConfirmDelete] = useState(false)
+const survivor = useSelector((state) => state.survivor.survivor)
+const dispatch = useDispatch()
 
-const handleDelete = () => {
-    onDeleteSave()
+const handleDelete = async () => {
+    try {
+        await deleteMySurvivor()
+        dispatch(clearSurvivor())
+    } catch (error) {
+        console.error(error)
+    }
     setConfirmDelete(false)
 }
 
@@ -70,14 +78,12 @@ return(
         <section>
             <p className="settings-option-title">Save File</p>
             <div className="save-card">
-                {savedGame ? (
+                {survivor ? (
                     <>
                     <div className="save-card-header">
                         <div>
-                        <p className="save-card-name">Example survivorname{/*savedGame.survivorName*/}</p>
-                        <p className="save-card-title">
-                            Example survivortitle{/*savedGame.survivorTitle*/}
-                        </p>
+                        <p className="save-card-name">{survivor.name}</p>
+                        <p className="save-card-title">{survivor.type}</p>
                         </div>
                     </div>
 

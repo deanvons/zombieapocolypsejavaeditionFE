@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store/store.js";
 import { setUser } from "./redux/slices/user/userSlice.js";
 import { getExistingOrCreateUser } from "./service/user-service.js";
+import { setSurvivor } from "./redux/slices/survivor/survivorSlice.js";
+import { getMySurvivor } from "./service/survivor-service.js";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -19,6 +21,13 @@ initialize()
                     user,
                 }),
             );
+
+            try {
+                const survivor = await getMySurvivor();
+                store.dispatch(setSurvivor(survivor));
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         root.render(
