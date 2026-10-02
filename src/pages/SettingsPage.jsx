@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSurvivor } from "../redux/slices/survivor/survivorSlice";
 import { deleteMySurvivor } from "../service/survivor-service";
+import { getAudioSettings, updateAudioSettings } from "../service/audio-settings.js";
 
 
 
@@ -20,6 +21,8 @@ export default function SettingsPage({
     settings = {difficulty: 'normal'},
     onChange = () => {},
 }){
+// This is vibe coded: keep the user's master audio controls in sync with Howler.
+const [audioSettings, setAudioSettings] = useState(getAudioSettings)
 const [confirmDelete, setConfirmDelete] = useState(false)
 const [deleteError, setDeleteError] = useState("")
 const [isDeletingSurvivor, setIsDeletingSurvivor] = useState(false)
@@ -89,6 +92,37 @@ return(
                                 </div>
                             </button>
                 ))}
+            </div>
+        </section>
+
+        <section className="mb-10">
+            <p className="settings-option-title">Audio</p>
+            <div className="difficulty-card difficulty-card-disabled space-y-4">
+                <label className="flex items-center justify-between gap-4 font-mono text-sm text-text">
+                    <span>Master volume</span>
+                    <span className="flex items-center gap-3">
+                        <input
+                            aria-label="Master volume"
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={audioSettings.volume}
+                            onChange={(event) => setAudioSettings(updateAudioSettings({ volume: Number(event.target.value) }))}
+                            className="accent-primary"
+                        />
+                        <span className="w-10 text-right">{Math.round(audioSettings.volume * 100)}%</span>
+                    </span>
+                </label>
+                <label className="flex items-center gap-3 font-mono text-sm text-text">
+                    <input
+                        type="checkbox"
+                        checked={audioSettings.muted}
+                        onChange={(event) => setAudioSettings(updateAudioSettings({ muted: event.target.checked }))}
+                        className="accent-primary"
+                    />
+                    Mute all sound
+                </label>
             </div>
         </section>
 

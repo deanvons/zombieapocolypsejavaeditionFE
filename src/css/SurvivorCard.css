@@ -1,15 +1,17 @@
-@import "../index.css";
-@import "tailwindcss";
+@reference "../index.css";
 
 @layer components {
     .survivor-card {
-        @apply flex items-start gap-4 rounded-lg border p-4
+        @apply flex items-start gap-4 rounded-lg border p-4 min-w-0
+    }
+    .survivor-card-info {
+        @apply min-w-0 flex-1 wrap-break-word
     }
     .survivor-card-you {
         @apply border-2
     }
     .survivor-card-avatar {
-        @apply h-12 w-12 shrink-0 rounded-full bg-neutral-200
+        @apply h-12 w-12 shrink-0 rounded-full border-border bg-panel border overflow-hidden
     }
     .survivor-card-name-row {
         @apply flex items-center gap-2

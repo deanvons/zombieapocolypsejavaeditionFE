@@ -4,7 +4,8 @@ import ActionSelectOption from "../components/ActionSelectOption.jsx";
 export default function ActionSelector({actions, onActionClicked, onPerformClicked, selected, canPerform}) {
 
     return (
-        <div className="flex flex-col action-card gap-1">
+        // This is vibe coded: match the softened border on the result panel.
+        <div className="flex flex-col action-card action-panel-soft-border gap-1">
             <h3 className="action-card-title">Actions</h3>
             <p className="action-card-description">Select an action you want to perform</p>
             {actions.map((action) => (
