@@ -27,10 +27,10 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
   
 
   return (
-  <div className="h-full min-w-0 flex flex-col">
+    <>
     <div className={
-      `card-button 
-      ${hovered ? 'card-hover' : 'bg-panel'}`}
+      `text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full
+      ${hovered ? 'border-border-bright bg-panel-hover -translate-y-0.5' : 'border-border bg-panel'}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={handleSelect}>
@@ -75,29 +75,29 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
           </div>
         ))}
       </dl>
-    </div>
-    
-    <div className="mt-auto pt-4">
-      <h4 className="small-title">Skills</h4>
-      <div  className="flex flex-wrap gap-1.5">
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+      <h4 className="font-mono text-xs uppercase tracking-widest text-text-dim mb-2">Skills</h4>
+      <ul className="mb-3 list-inside list-disc text-xs leading-5 text-body">
         {survivor.skills.map((skill) => (
-          <span 
-          key={skill}
-          className="skill-box">{skill}</span>
+          <li key={skill}>{skill}</li>
         ))}
+      </ul>
       </div>
-      </div>
-       
-      
-       <button
-              type="button"
-              className="group menu-button-active select-survivor-button"
-              onClick={handleSelect}
-            >
-                Select
-            </button>
+
+      <button
+        type="button"
+        className="group menu-button menu-button-active mt-auto w-full px-4 py-2"
+      >
+        <span className="flex items-center justify-between">
+          <span className="button-label button-label-active">Select</span>
+          <span className="button-arrow" aria-hidden="true">&rarr;</span>
+        </span>
+        <span className="button-indicator" aria-hidden="true" />
+      </button>
+    
     </div>
-  </div>
+    </>
   );
   
 }
