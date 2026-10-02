@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
+import keycloak from "../../keycloak";
 import SurvivorTypeCard from "../components/SurvivorTypeCard";
 import { survivorTypes } from "../components/SurvivorType.js";
 import { createSurvivor } from "../service/survivor-service.js";
@@ -12,6 +13,10 @@ export default function CreateSurvivorPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Admin-only types (Leader) are hidden for everyone else
+  const isAdmin = keycloak.hasRealmRole("ADMIN");
+  const availableTypes = survivorTypes.filter((type) => !type.adminOnly || isAdmin);
 
   const handleChooseSurvivor = async (survivorType) => {
     if (!survivorName.trim()) {
@@ -82,7 +87,7 @@ export default function CreateSurvivorPage() {
 
 
       <div className="survivor-type-grid">
-        {survivorTypes.map((survivor) => (
+        {availableTypes.map((survivor) => (
           <SurvivorTypeCard key={survivor.id} survivor={survivor} onClickCard={handleChooseSurvivor} />
         ))}
       </div>

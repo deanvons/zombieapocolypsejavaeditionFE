@@ -52,4 +52,22 @@ export const survivorTypes = [
       "Trap Setting",
     ],
   },
+  {
+    id: 3,
+    name: "LEADER",
+    // Backend enum is TESTSURVIVOR; "Leader" is only the frontend name
+    type: "TESTSURVIVOR",
+    image: "/deanWarrior.png",
+    adminOnly: true,
+    attributes: {
+      Strength: 10,
+      Agility: 10,
+      Trustworthiness: 10,
+      Intelligence: 10,
+      Courage: 10,
+      Endurance: 10,
+      Leadership: 10,
+    },
+    skills: ["Weapon Maintenance", "Blunt Weapons"],
+  },
 ];
