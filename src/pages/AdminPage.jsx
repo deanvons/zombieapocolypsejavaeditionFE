@@ -29,7 +29,7 @@ export default function AdminPage(){
         <div className="settings-maincontent">
             <h1 className="settings-title">Admin</h1>
             <div className="audit-entries-container">
-                {auditEntries.map((entry) => (
+                {auditEntries.toReversed().map((entry) => (
                     <div className="audit-entry">
                         <span>{entry.actorId}, </span>
                         <span>{entry.actionType}, </span>
