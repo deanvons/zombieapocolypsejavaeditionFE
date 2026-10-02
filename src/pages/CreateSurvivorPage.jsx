@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import keycloak from "../../keycloak";
 import SurvivorTypeCard from "../components/SurvivorTypeCard";
 import { survivorTypes } from "../components/SurvivorType.js";
 import { createSurvivor } from "../service/survivor-service.js";
