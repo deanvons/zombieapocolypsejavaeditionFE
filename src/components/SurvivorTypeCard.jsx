@@ -24,7 +24,7 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
 
   return (
     <>
-    <button className={
+    <div className={
       `text-left relative border rounded-sm overflow-hidden transition-all duration-200 cursor-pointer w-full
       ${hovered ? 'border-border-bright bg-panel-hover -translate-y-0.5' : 'border-border bg-panel'}`}
       onMouseEnter={() => setHovered(true)}
@@ -81,7 +81,6 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
       <button
         type="button"
         className="group menu-button menu-button-active mt-auto w-full px-4 py-2"
-        onClick={handleSelect}
       >
         <span className="flex items-center justify-between">
           <span className="button-label button-label-active">Select</span>
@@ -90,7 +89,7 @@ export default function SurvivorTypeCard({ survivor, customName, onValidate}) {
         <span className="button-indicator" aria-hidden="true" />
       </button>
     
-    </button>
+    </div>
     </>
   );
   
