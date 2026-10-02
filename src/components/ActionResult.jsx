@@ -108,6 +108,11 @@ function isShelterAction(actionType) {
     return actionType?.includes("shelter") ?? false;
 }
 
+// Forage replaced the old Scavenge action, so it reuses Scavenge's sounds and visuals
+function isScavengeAction(actionType) {
+    return actionType === "forage" || actionType === "scavenge";
+}
+
 function ActionResultPanel({effectiveness, displayedScore, resultRunKey, revealRunKey, impactStyle, actionType}) {
     // This is vibe coded: only reveal effects for the current completed action.
     const isRevealActive = revealRunKey === resultRunKey;
@@ -131,10 +136,10 @@ function ActionResultPanel({effectiveness, displayedScore, resultRunKey, revealR
                     <div className="flex flex-col items-center justify-center">
                         <p className="action-effectiveness-label">Effectiveness</p>
                         <div className="scavenge-score-stage">
-                            <p className={`action-result-score ${actionType === "attack" && isRevealActive ? "attack-score" : ""} ${actionType === "heal" && isRevealActive ? "heal-score" : ""} ${actionType === "scavenge" && isRevealActive ? "scavenge-score" : ""} ${isShelterAction(actionType) && isRevealActive ? "shelter-score" : ""} ${actionType === "persuade" && isRevealActive ? "persuade-score" : ""}`}>
+                            <p className={`action-result-score ${actionType === "attack" && isRevealActive ? "attack-score" : ""} ${actionType === "heal" && isRevealActive ? "heal-score" : ""} ${isScavengeAction(actionType) && isRevealActive ? "scavenge-score" : ""} ${isShelterAction(actionType) && isRevealActive ? "shelter-score" : ""} ${actionType === "persuade" && isRevealActive ? "persuade-score" : ""}`}>
                                 {displayedScore ?? 0}
                             </p>
-                            {actionType === "scavenge" && isRevealActive && (
+                            {isScavengeAction(actionType) && isRevealActive && (
                                 <div className="scavenge-sparkles" aria-hidden="true">
                                     <span className="scavenge-star scavenge-star-one">✦</span>
                                     <span className="scavenge-star scavenge-star-two">✦</span>
@@ -210,7 +215,7 @@ export default function ActionResult({effectiveness, resultRunKey, actionType}) 
                 if (playSlashImmediately) playAttackSound();
             } else if (actionType === "heal") {
                 playHealthPickupSound();
-            } else if (actionType === "scavenge") {
+            } else if (isScavengeAction(actionType)) {
                 playCoinDropSound();
             } else if (isShelterAction(actionType)) {
                 playShelterBuildSound();
@@ -237,7 +242,7 @@ export default function ActionResult({effectiveness, resultRunKey, actionType}) 
             // This is vibe coded: slightly slow the healing spell playback.
             healingSpellSound.rate(0.85, healingSpellSoundId);
             healingSpellSound.fade(0, 0.8, 350, healingSpellSoundId);
-        } else if (actionType === "scavenge") {
+        } else if (isScavengeAction(actionType)) {
             scavengeFootstepsSound.volume(0);
             scavengeFootstepsSoundId = scavengeFootstepsSound.play();
             scavengeFootstepsSound.fade(0, 0.8, 350, scavengeFootstepsSoundId);
