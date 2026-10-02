@@ -1,0 +1,36 @@
+@reference "../index.css";
+
+/* Fills the bar from 0 to 100%; the duration is set inline so it matches the search timer */
+@keyframes scavenge-progress {
+    from { width: 0%; }
+    to   { width: 100%; }
+}
+
+@layer components {
+    .scavenge-progress-track {
+        @apply w-full h-3 rounded-full bg-border overflow-hidden;
+    }
+
+    .scavenge-progress-fill {
+        @apply h-full rounded-full bg-primary;
+        animation-name: scavenge-progress;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+
+    .scavenge-item-name {
+        @apply font-russo text-4xl md:text-6xl text-green tracking-wider;
+    }
+
+    .scavenge-effectiveness {
+        @apply font-russo text-2xl text-green tracking-wider normal-case ml-2;
+    }
+
+    .scavenge-stat {
+        @apply font-mono text-xs uppercase tracking-widest text-text border border-text-dim rounded-sm px-3 py-1;
+    }
+
+    .scavenge-back-link {
+        @apply font-mono text-xs uppercase tracking-widest text-text-dim mx-15 cursor-pointer hover:text-primary transition-colors duration-150;
+    }
+}

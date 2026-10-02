@@ -1,0 +1,19 @@
+---
+description: Review the current uncommitted changes with a fresh pair of eyes
+---
+
+<!--
+  A slash command (/review-diff). This is the older, simpler form: one markdown
+  file = one prompt the HUMAN triggers by typing /review-diff.
+  Claude Code has since merged commands into skills - a skill in
+  .claude/skills/<name>/SKILL.md can do everything this can, plus bundle
+  extra files and let the MODEL decide to use it. Commands still work.
+-->
+
+Use the `reviewer` subagent to review the uncommitted changes (`git diff`) against the spec in `docs/specs/` that they implement.
+
+$ARGUMENTS
+
+Pass the reviewer only the spec path and the instruction to run `git diff` itself. Do NOT pass your own summary of what you changed or why: the point is a reviewer whose context has not been shaped by the author's explanation.
+
+When it reports back, show its findings to the human unedited.

@@ -1,6 +1,7 @@
 import "../css/ActionPage.css";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { getAllActions } from "../service/action-service.js";
 import { performAction } from "../service/survivor-service.js";
 
@@ -8,6 +9,7 @@ import ActionSelector from "../components/ActionSelector.jsx";
 import ActionResult from "../components/ActionResult.jsx";
 
 export default function ActionPage() {
+  const navigate = useNavigate();
   const survivor = useSelector((state) => state.survivor.survivor);
   const survivorId = survivor?.id ?? null;
 
@@ -40,7 +42,12 @@ export default function ActionPage() {
       return;
     }
 
-    const actionType = selectedAction?.name?.trim().toLowerCase() ?? null;
+    // Scavenge has its own page instead of an effectiveness score here
+    const action = actions.find((a) => a.id === actionId);
+    if (action?.name === "Scavenge") {
+      navigate("/scavenge");
+      return;
+    }
 
     try {
       setErrorMessage(null);

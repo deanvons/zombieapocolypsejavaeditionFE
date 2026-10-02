@@ -8,6 +8,7 @@ import SurvivorPage from "../pages/SurvivorPage.jsx";
 import AppLayout from "../layouts/AppLayout.jsx";
 import ActionPage from "../pages/ActionPage.jsx";
 import DeleteSurvivorPage from "../pages/DeleteSurvivorPage.jsx";
+import ScavangingPage from "../pages/ScavangingPage.jsx";
 
 const authenticatedRoutes = [
     {
@@ -44,6 +45,10 @@ const authenticatedRoutes = [
         {
         path: "/delete-survivor",
         Component: DeleteSurvivorPage,
+        },
+        {
+        path: "/scavenge",
+        Component: ScavangingPage,
         }
       ],
     },

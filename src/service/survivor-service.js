@@ -83,3 +83,34 @@ export async function performAction(survivorId, actionId) {
 
   return await response.json();
 }
+
+// POST /api/survivors/{id}/items
+// item: { type: "tool" | "weapon", name, weight, durability?, damage? }
+export async function loadItem(survivorId, item) {
+  const response = await fetch(`${API_URL}/api/survivors/${survivorId}/items`, {
+    method: "POST",
+    headers: await getAuthHeaders(),
+    body: JSON.stringify(item),
+  });
+
+  if (!response.ok) {
+    const errorResponse = await response.json().catch(() => null);
+    throw new Error(errorResponse?.message ?? `loadItem failed: ${response.status}`);
+  }
+
+  // Returns the updated survivor
+  return await response.json();
+}
+
+// DELETE /api/survivors/{id}/items/{itemId}
+export async function deleteItem(survivorId, itemId) {
+  const response = await fetch(`${API_URL}/api/survivors/${survivorId}/items/${itemId}`, {
+    method: "DELETE",
+    headers: await getAuthHeaders(),
+  });
+
+  if (!response.ok) {
+    const errorResponse = await response.json().catch(() => null);
+    throw new Error(errorResponse?.message ?? `deleteItem failed: ${response.status}`);
+  }
+}
