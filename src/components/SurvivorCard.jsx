@@ -12,21 +12,25 @@ export default function SurvivorCard({ survivor, isYou }) {
     const skills = survivor.skills ?? []
 
     return (
-        <div className={`survivor-card ${isYou ? 'survivor-card-you' : ''}`}>
+        <div className={`survivor-card ${isYou ? "survivor-card-you" : ""}`}>
             <div className="survivor-card-avatar" />
-            <div>
+            <div className='survivor-card-info'>
                 <div className="survivor-card-name-row">
                     <h2 className="survivor-card-name">{survivor.name}</h2>
-                    {isYou && <span className="survivor-card-you-badge">YOU</span>}
+                    {isYou && (
+                        <span className="survivor-card-you-badge">YOU</span>
+                    )}
                 </div>
                 <p className="survivor-card-subtitle">
                     {formatEnum(survivor.type)}
-                    {survivor.username ? ` · ${survivor.username}` : ''}
+                    {survivor.username ? ` · ${survivor.username}` : ""}
                 </p>
                 {skills.length > 0 && (
-                    <p className="survivor-card-skills">{skills.map(formatEnum).join(', ')}</p>
+                    <p className="survivor-card-skills">
+                        {skills.map(formatEnum).join(", ")}
+                    </p>
                 )}
             </div>
         </div>
-    )
+    );
 }
