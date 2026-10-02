@@ -11,7 +11,7 @@
         @apply border-2
     }
     .survivor-card-avatar {
-        @apply h-12 w-12 shrink-0 rounded-full bg-neutral-200
+        @apply h-12 w-12 shrink-0 rounded-full border-border bg-panel border overflow-hidden
     }
     .survivor-card-name-row {
         @apply flex items-center gap-2

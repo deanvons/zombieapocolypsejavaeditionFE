@@ -1,5 +1,7 @@
 import '../css/SurvivorCard.css'
 
+import { survivorTypes } from "../components/SurvivorType.js";
+
 function formatEnum(value) {
     return String(value)
         .toLowerCase()
@@ -11,10 +13,20 @@ function formatEnum(value) {
 export default function SurvivorCard({ survivor, isYou }) {
     const skills = survivor.skills ?? []
 
+      const survivorType = survivorTypes.find(
+          (type) => type.name === survivor.type?.toUpperCase(),
+      );
+
+
     return (
         <div className={`survivor-card ${isYou ? "survivor-card-you" : ""}`}>
-            <div className="survivor-card-avatar" />
-            <div className='survivor-card-info'>
+            <div className="survivor-card-avatar">
+                <img
+                    src={survivorType?.image}
+                    alt={`${survivor.name.toLowerCase()} survivor`}
+                />
+            </div>
+            <div className="survivor-card-info">
                 <div className="survivor-card-name-row">
                     <h2 className="survivor-card-name">{survivor.name}</h2>
                     {isYou && (
