@@ -70,4 +70,27 @@ export const survivorTypes = [
     },
     skills: ["Weapon Maintenance", "Blunt Weapons"],
   },
+  {
+    id: 4,
+    name: "SWEDISH",
+    type: "SWEDISH",
+    // This is vibe coded: use Linus's survivor portrait.
+    image: "/linus.png",
+    attributes: {
+      Strength: 5,
+      Agility: 6,
+      Trustworthiness: 9,
+      Intelligence: 7,
+      Courage: 4,
+      Endurance: 3,
+      Leadership: 10,
+    },
+    skills: [
+      "Crowd Control",
+      "FIFA Boss",
+      "Fire Starting",
+      "Water Purification",
+      "Motivational Speaking",
+    ],
+  },
 ];
