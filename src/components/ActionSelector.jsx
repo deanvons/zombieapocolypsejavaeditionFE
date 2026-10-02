@@ -1,7 +1,8 @@
 import "../css/ActionPage.css";
+import { Link } from "react-router";
 import ActionSelectOption from "../components/ActionSelectOption.jsx";
 
-export default function ActionSelector({actions, onActionClicked, onPerformClicked, selected, canPerform}) {
+export default function ActionSelector({actions, onActionClicked, onPerformClicked, selected, canPerform, missingItems = []}) {
 
     return (
         // This is vibe coded: match the softened border on the result panel.
@@ -16,6 +17,19 @@ export default function ActionSelector({actions, onActionClicked, onPerformClick
                     onActionClicked={() => onActionClicked(action)}
                 />
             ))}
+            {missingItems.length > 0 && (
+                <div className="px-8 md:px-18 pt-4">
+                    <div className="action-missing-box" role="alert">
+                        <p className="action-missing-title">You do not have the required items</p>
+                        <p className="action-missing-list">
+                            Missing: {missingItems.map((item) => item.label).join(", ")}
+                        </p>
+                        <Link to="/scavenge" className="action-missing-link">
+                            Go scavenging →
+                        </Link>
+                    </div>
+                </div>
+            )}
             <div className="flex pt-4 px-8 md:px-18 items-center">
                 <button
                     className="group action-entry action-entry-inactive enabled:hover:border-primary/60 enabled:hover:bg-primary/5 disabled:opacity-40 disabled:cursor-not-allowed"

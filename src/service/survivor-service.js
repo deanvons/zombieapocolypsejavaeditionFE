@@ -85,6 +85,10 @@ export async function performAction(survivorId, actionId) {
   if (!response.ok) {
     const errorResponse = await response.json().catch(() => null);
     console.error(`performAction failed (${response.status}):`, errorResponse?.message);
+    // The backend answers 400 when the survivor lacks the action's required items
+    if (response.status === 400) {
+      throw new Error("You do not have the required items.");
+    }
     throw new Error("Could not perform the action. Please try again.");
   }
 
