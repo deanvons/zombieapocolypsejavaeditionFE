@@ -10,7 +10,11 @@ export async function getAllSurvivors() {
   });
 
   if (!response.ok) {
-    throw new Error(`getAllSurvivors failed: ${response.status}`);
+    // Log the backend's { status, message } for debugging (the body may be empty, e.g. 401),
+    // and give the player a friendly message
+    const errorResponse = await response.json().catch(() => null);
+    console.error(`getAllSurvivors failed (${response.status}):`, errorResponse?.message);
+    throw new Error("Could not load the survivors. Please try again.");
   }
 
   return await response.json();
@@ -28,7 +32,9 @@ export async function getMySurvivor() {
   }
 
   if (!response.ok) {
-    throw new Error(`getMySurvivor failed: ${response.status}`);
+    const errorResponse = await response.json().catch(() => null);
+    console.error(`getMySurvivor failed (${response.status}):`, errorResponse?.message);
+    throw new Error("Could not load your survivor. Please try again.");
   }
 
   return await response.json();
@@ -42,29 +48,30 @@ export async function createSurvivor(name, type) {
     body: JSON.stringify({ name, type }),
   });
 
-  if (response.status === 409) {
-    throw new Error("You already have a survivor.");
-  }
-
   if (!response.ok) {
-    throw new Error(`createSurvivor failed: ${response.status}`);
+    const errorResponse = await response.json().catch(() => null);
+    console.error(`createSurvivor failed (${response.status}):`, errorResponse?.message);
+    // Players with a survivor are sent to /delete-survivor first, so a 409 here means the name is taken
+    if (response.status === 409) {
+      throw new Error("That name is already taken.");
+    }
+    throw new Error("Could not create your survivor. Please try again.");
   }
 
   return await response.json();
 }
 
+// DELETE /api/survivors/me
 export async function deleteMySurvivor() {
   const response = await fetch(`${API_URL}/api/survivors/me`, {
     method: "DELETE",
     headers: await getAuthHeaders(),
   });
 
-  if (response.status === 404) {
-    throw new Error("You don't have a survivor to delete.");
-  }
-
   if (!response.ok) {
-    throw new Error(`deleteMySurvivor failed: ${response.status}`);
+    const errorResponse = await response.json().catch(() => null);
+    console.error(`deleteMySurvivor failed (${response.status}):`, errorResponse?.message);
+    throw new Error("Could not delete your survivor. Please try again.");
   }
 }
 
@@ -76,9 +83,9 @@ export async function performAction(survivorId, actionId) {
   });
 
   if (!response.ok) {
-    // The backend sends { status, message } on errors; However, the body may be empty (e.g. 401)
     const errorResponse = await response.json().catch(() => null);
-    throw new Error(errorResponse?.message ?? `performAction failed: ${response.status}`);
+    console.error(`performAction failed (${response.status}):`, errorResponse?.message);
+    throw new Error("Could not perform the action. Please try again.");
   }
 
   return await response.json();
