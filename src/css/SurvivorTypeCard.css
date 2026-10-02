@@ -5,4 +5,33 @@
     .survivor-name{
         @apply font-russo text-xl text-text
     }
+
+    .card-button{
+        @apply text-left relative flex h-full min-w-0 flex-col rounded-sm border border-border overflow-hidden transition-all duration-200 cursor-pointer w-full p-2
+    }
+    .card-hover{
+        @apply border-border-bright bg-panel-hover -translate-y-0.5
+    }
+    .survivor-name-box{
+        @apply flex items-center justify-between p-5 border-b border-border
+    }
+
+    .picture-box{
+        @apply relative h-80 overflow-hidden bg-panel
+    }
+    .small-title{
+        @apply font-mono text-xs uppercase tracking-widest text-text-dim mb-2 mt-5
+    }
+    .attribute-title{
+        @apply grid grid-cols-[7rem_minmax(0,1fr)] items-center gap-2
+    }
+    .attribute-value{
+        @apply w-10 text-right font-mono text-xs text-text
+    }
+    .skill-box{
+        @apply font-mono text-xs px-2 py-0.5 rounded-sm border border-border-bright text-text-dim
+    }
+    .select-survivor-button{
+        @apply mt-5 w-full px-4 py-2 w-full py-2 font-russo text-sm tracking-widest uppercase text-center rounded-sm border transition-all duration-150
+    }
 }

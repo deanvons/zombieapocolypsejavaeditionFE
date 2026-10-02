@@ -3,7 +3,7 @@ export const survivorTypes = [
     id: 0,
     name: "CAREGIVER",
     type:"Caregiver",
-    image: "/hershel1.jpg",
+    image: "/hershel1.png",
     attributes: {
       Strength: 2,
       Agility: 3,
@@ -19,7 +19,7 @@ export const survivorTypes = [
     id: 1,
     name: "HERO",
     type: "Hero",
-    image: "/rick.jpg",
+    image: "/rick.png",
     attributes: {
       Strength: 9,
       Agility: 5,
@@ -35,7 +35,7 @@ export const survivorTypes = [
     id: 2,
     name: "OUTLAW",
     type: "Outlaw",
-    image: "/daryl.jpg",
+    image: "/daryl.png",
     attributes: {
       Strength: 7,
       Agility: 9,

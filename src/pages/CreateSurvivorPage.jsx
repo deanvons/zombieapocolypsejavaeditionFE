@@ -20,7 +20,8 @@ export default function CreateSurvivorPage() {
   };
 
   return (
-    <div className="create-survivor-maincontent">
+    
+    <div className="selectpage-maincontent">
       <header>
         <button
           onClick={() => navigate("/")}
@@ -68,17 +69,11 @@ export default function CreateSurvivorPage() {
         </div>
       )}
 
-      <div className="create-survivor-type-grid">
-        <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {survivorTypes.map((survivor) => (
-            <SurvivorTypeCard
-              key={survivor.id}
-              survivor={survivor}
-              customName={survivorName}
-              onValidate={handleInput}
-            />
-          ))}
-        </div>
+
+      <div className="survivor-type-grid">
+        {survivorTypes.map((survivor) => (
+          <SurvivorTypeCard key={survivor.id} survivor={survivor} customName={survivorName} onValidate={handleInput} />
+        ))}
       </div>
     </div>
   );
