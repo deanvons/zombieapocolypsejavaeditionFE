@@ -11,12 +11,15 @@ import "../css/CreateSurvivorPage.css";
 export default function CreateSurvivorPage() {
   const [survivorName, setSurvivorName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [carouselStart, setCarouselStart] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // Admin-only types (Leader) are hidden for everyone else
   const isAdmin = keycloak.hasRealmRole("ADMIN");
   const availableTypes = survivorTypes.filter((type) => !type.adminOnly || isAdmin);
+  const maxCarouselStart = Math.max(0, availableTypes.length - 3);
+  const visibleTypes = availableTypes.slice(carouselStart, carouselStart + 3);
 
   const handleChooseSurvivor = async (survivorType) => {
     if (!survivorName.trim()) {
@@ -86,11 +89,38 @@ export default function CreateSurvivorPage() {
       )}
 
 
-      <div className="survivor-type-grid">
-        {availableTypes.map((survivor) => (
+      <section className="survivor-carousel" aria-label="Choose a survivor type">
+        <div className="survivor-carousel-controls">
+          <button
+            type="button"
+            className="survivor-carousel-button"
+            aria-label="Previous survivor types"
+            disabled={carouselStart === 0}
+            onClick={() => setCarouselStart((current) => Math.max(0, current - 1))}
+          >
+            ‹
+          </button>
+          <span className="survivor-carousel-count" aria-live="polite">
+            {carouselStart + 1}–{Math.min(carouselStart + 3, availableTypes.length)} / {availableTypes.length}
+          </span>
+          <button
+            type="button"
+            className="survivor-carousel-button"
+            aria-label="Next survivor types"
+            disabled={carouselStart >= maxCarouselStart}
+            onClick={() => setCarouselStart((current) => Math.min(maxCarouselStart, current + 1))}
+          >
+            ›
+          </button>
+        </div>
+
+        {/* This is vibe coded: show three larger survivor cards per carousel view. */}
+        <div className="survivor-type-grid">
+        {visibleTypes.map((survivor) => (
           <SurvivorTypeCard key={survivor.id} survivor={survivor} onClickCard={handleChooseSurvivor} />
         ))}
-      </div>
+        </div>
+      </section>
     </div>
   );
 }
