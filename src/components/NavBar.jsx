@@ -34,6 +34,12 @@ export default function NavBar({onLogout = () => {}}){
                     Welcome {survivor?.name ?? "survivor"}
                 </span>
                 <button
+                    onClick={() => navigate("/")}
+                    className="navbar-button"
+                >
+                    Home
+                </button>
+                <button
                     onClick={() => navigate("/profile")}
                     className="navbar-button"
                 >
